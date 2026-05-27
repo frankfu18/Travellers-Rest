@@ -3,9 +3,12 @@ export type ContentKind = "recipe" | "ingredient" | "drink" | "crop" | "guide";
 export type Recipe = {
   id: string;
   slug: string;
+  title: string;
   name: string;
   description: string;
   category: string;
+  keywords: string[];
+  sections: GuideSection[];
   sellPrice: number;
   ingredients: string[];
   craftingStation: string;
@@ -17,9 +20,12 @@ export type Recipe = {
 export type Ingredient = {
   id: string;
   slug: string;
+  title: string;
   name: string;
   description: string;
   category: string;
+  keywords: string[];
+  sections: GuideSection[];
   sellPrice: number;
   ingredients: string[];
   craftingStation: string;
@@ -34,16 +40,18 @@ export type Guide = {
   title: string;
   description: string;
   category: string;
+  keywords: string[];
   updatedAt: string;
   readingTime: string;
   sections: GuideSection[];
   faq: FaqItem[];
+  relatedSlugs: string[];
 };
 
 export type GuideSection = {
   id: string;
   title: string;
-  body: string;
+  body: string[];
 };
 
 export type FaqItem = {

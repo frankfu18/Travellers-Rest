@@ -5,9 +5,8 @@ import { ContentCard } from "@/components/content-card";
 import { JsonLd } from "@/components/json-ld";
 import { SearchBox } from "@/components/search-box";
 import { categories } from "@/data/categories";
-import { guides } from "@/data/guides";
 import { createMetadata } from "@/lib/seo";
-import { getPopularPages } from "@/lib/content";
+import { getBeginnerGuideCards, getLatestGuideCards, getPopularPages } from "@/lib/content";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = createMetadata({
@@ -15,16 +14,29 @@ export const metadata: Metadata = createMetadata({
   description:
     "Travellers Rest wiki-style guide database for recipes, ingredients, drinks, crops, fishing, mining, crafting, NPCs, and beginner tips.",
   path: "/",
+  keywords: [
+    "Travellers Rest guide",
+    "Travellers Rest recipes",
+    "Travellers Rest beginner guide",
+    "Travellers Rest wiki",
+  ],
 });
 
 export default function HomePage() {
-  const latestGuides = guides.slice(0, 2).map((guide) => ({
-    title: guide.title,
-    href: `/guides/${guide.slug}`,
-    description: guide.description,
-    meta: guide.category,
-  }));
+  const beginnerGuides = getBeginnerGuideCards();
+  const latestGuides = getLatestGuideCards(6);
   const popularPages = getPopularPages();
+  const popularSearches = [
+    { label: "Travellers Rest beginner guide", href: "/guides/beginner-tavern-guide" },
+    { label: "Travellers Rest make money early game", href: "/guides/how-to-make-money-early-game" },
+    { label: "Travellers Rest reputation", href: "/guides/how-to-increase-reputation" },
+    { label: "Travellers Rest more customers", href: "/guides/how-to-get-more-customers" },
+    { label: "Travellers Rest brewing", href: "/guides/brewing-basics" },
+    { label: "Travellers Rest best early recipes", href: "/guides/best-early-game-recipes" },
+  ];
+  const primaryCategories = categories.filter((category) =>
+    ["recipes", "ingredients", "drinks", "crops", "fishing", "mining", "crafting", "npcs"].includes(category.slug),
+  );
 
   return (
     <main>
@@ -101,10 +113,63 @@ export default function HomePage() {
       </section>
 
       <section className="border-y border-amber-300/15 bg-[#1a100b]">
+        <div className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#f3c35a]">Start here</p>
+              <h2 className="mt-2 text-3xl font-black text-amber-50">Beginner Guides</h2>
+            </div>
+            <Link href="/guides" className="text-sm font-bold text-amber-200 hover:text-amber-100">
+              View all guides
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {beginnerGuides.map((item) => (
+              <ContentCard key={item.href} item={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:px-6">
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#f3c35a]">Search demand</p>
+          <h2 className="mt-2 text-3xl font-black text-amber-50">Popular Searches</h2>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {popularSearches.map((search) => (
+              <Link
+                key={search.href}
+                href={search.href}
+                className="rounded border border-amber-200/20 bg-amber-200/10 px-3 py-2 text-sm font-semibold text-stone-200 hover:border-amber-200/45 hover:text-amber-100"
+              >
+                {search.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#f3c35a]">Wiki categories</p>
+          <h2 className="mt-2 text-3xl font-black text-amber-50">Browse the Database</h2>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            {primaryCategories.map((category) => (
+              <Link
+                key={category.slug}
+                href={category.href}
+                className="wood-panel rounded-lg p-4 hover:border-amber-200/35"
+              >
+                <h3 className="font-bold text-amber-50">{category.name}</h3>
+                <p className="mt-1 text-sm text-stone-300">{category.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-amber-300/15 bg-[#1a100b]">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 lg:grid-cols-2 lg:px-6">
           <div>
             <h2 className="text-3xl font-black text-amber-50">Latest Guides</h2>
-            <div className="mt-5 grid gap-4">
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
               {latestGuides.map((item) => (
                 <ContentCard key={item.href} item={item} />
               ))}

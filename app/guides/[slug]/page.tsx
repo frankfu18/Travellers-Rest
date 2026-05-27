@@ -7,8 +7,8 @@ import { InfoTable } from "@/components/info-table";
 import { JsonLd } from "@/components/json-ld";
 import { TableOfContents } from "@/components/table-of-contents";
 import { guides } from "@/data/guides";
-import { getGuide, getRelatedGuides } from "@/lib/content";
-import { articleSchema, breadcrumbSchema, createMetadata } from "@/lib/seo";
+import { getGuide, getGuideNavigation, getRelatedGuides } from "@/lib/content";
+import { articleSchema, breadcrumbSchema, createMetadata, faqSchema } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -33,10 +33,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return createMetadata({
-    title: `${guide.title} - Travellers Rest Guide`,
+    title: guide.title,
     description: guide.description,
     path: `/guides/${guide.slug}`,
     type: "article",
+    keywords: guide.keywords,
   });
 }
 
@@ -50,6 +51,7 @@ export default async function GuidePage({ params }: PageProps) {
 
   const path = `/guides/${guide.slug}`;
   const relatedGuides = getRelatedGuides(path);
+  const navigation = getGuideNavigation(guide.slug);
   const toc = [...guide.sections.map((section) => ({ id: section.id, title: section.title })), { id: "faq-heading", title: "FAQ" }];
 
   return (
@@ -57,7 +59,7 @@ export default async function GuidePage({ params }: PageProps) {
       <JsonLd
         data={[
           articleSchema({
-            title: `${guide.title} - Travellers Rest Guide`,
+            title: guide.title,
             description: guide.description,
             path,
             dateModified: guide.updatedAt,
@@ -67,6 +69,7 @@ export default async function GuidePage({ params }: PageProps) {
             { name: "Guides", path: "/guides" },
             { name: guide.title, path },
           ]),
+          faqSchema(guide.faq),
         ]}
       />
       <Breadcrumbs
@@ -84,13 +87,36 @@ export default async function GuidePage({ params }: PageProps) {
           {guide.sections.map((section) => (
             <section key={section.id} id={section.id} className="mt-10">
               <h2 className="text-2xl font-bold text-amber-50">{section.title}</h2>
-              <p className="mt-3 text-stone-300">{section.body}</p>
+              <div className="mt-3 space-y-4 text-stone-300">
+                {section.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </section>
           ))}
 
           <div className="mt-10">
             <Faq items={guide.faq} />
           </div>
+
+          <nav className="mt-10 grid gap-4 md:grid-cols-2" aria-label="Guide navigation">
+            {navigation.previous ? (
+              <ContentCard
+                item={{
+                  ...navigation.previous,
+                  meta: "Previous Guide",
+                }}
+              />
+            ) : null}
+            {navigation.next ? (
+              <ContentCard
+                item={{
+                  ...navigation.next,
+                  meta: "Next Guide",
+                }}
+              />
+            ) : null}
+          </nav>
 
           <section className="mt-10" aria-labelledby="related-guides-heading">
             <h2 id="related-guides-heading" className="text-2xl font-bold text-amber-50">

@@ -6,9 +6,10 @@ type SeoInput = {
   description: string;
   path: string;
   type?: "website" | "article";
+  keywords?: string[];
 };
 
-export function createMetadata({ title, description, path, type = "website" }: SeoInput): Metadata {
+export function createMetadata({ title, description, path, type = "website", keywords }: SeoInput): Metadata {
   const url = `${siteConfig.url}${path}`;
   const baseOpenGraph = {
     title,
@@ -28,6 +29,7 @@ export function createMetadata({ title, description, path, type = "website" }: S
   return {
     title,
     description,
+    keywords,
     alternates: {
       canonical: path,
     },
@@ -38,6 +40,21 @@ export function createMetadata({ title, description, path, type = "website" }: S
       description,
       images: ["/images/tavern-hero.png"],
     },
+  };
+}
+
+export function faqSchema(items: Array<{ question: string; answer: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 

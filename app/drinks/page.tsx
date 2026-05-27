@@ -9,6 +9,7 @@ export const metadata: Metadata = createMetadata({
   title: category.title,
   description: category.description,
   path: category.href,
+  keywords: category.keywords,
 });
 
 export default function DrinksPage() {

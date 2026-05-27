@@ -4,9 +4,20 @@ export const ingredients: Ingredient[] = [
   {
     id: "ingredient-barley",
     slug: "barley",
+    title: "Travellers Rest Barley Ingredient Guide",
     name: "Barley",
     description: "A core grain for brewing and cooking chains, especially useful for beer-focused taverns.",
     category: "Crop",
+    keywords: ["Travellers Rest Barley", "Travellers Rest brewing ingredient", "grain crop"],
+    sections: [
+      {
+        id: "ingredient-overview",
+        title: "Ingredient Overview",
+        body: [
+          "Barley is a starter ingredient record for crop and brewing content. It should eventually link to every recipe and drink chain that uses it.",
+        ],
+      },
+    ],
     sellPrice: 8,
     ingredients: [],
     craftingStation: "Field",
@@ -26,9 +37,20 @@ export const ingredients: Ingredient[] = [
   {
     id: "ingredient-carrot",
     slug: "carrot",
+    title: "Travellers Rest Carrot Ingredient Guide",
     name: "Carrot",
     description: "A flexible crop ingredient for simple cooking recipes and early tavern meals.",
     category: "Crop",
+    keywords: ["Travellers Rest Carrot", "Travellers Rest crop ingredient", "early cooking"],
+    sections: [
+      {
+        id: "ingredient-overview",
+        title: "Ingredient Overview",
+        body: [
+          "Carrot is a flexible mock crop entry for early cooking content. It is useful for explaining how ingredient pages can support recipe hubs.",
+        ],
+      },
+    ],
     sellPrice: 6,
     ingredients: [],
     craftingStation: "Field",
@@ -48,9 +70,20 @@ export const ingredients: Ingredient[] = [
   {
     id: "ingredient-honey",
     slug: "honey",
+    title: "Travellers Rest Honey Ingredient Guide",
     name: "Honey",
     description: "A sweet ingredient for desserts and specialty drinks.",
     category: "Animal Product",
+    keywords: ["Travellers Rest Honey", "Travellers Rest sweet ingredient", "dessert drinks"],
+    sections: [
+      {
+        id: "ingredient-overview",
+        title: "Ingredient Overview",
+        body: [
+          "Honey is a higher-value ingredient entry for sweet recipes and specialty drink planning. It gives the data model a non-crop example.",
+        ],
+      },
+    ],
     sellPrice: 18,
     ingredients: [],
     craftingStation: "Apiary",

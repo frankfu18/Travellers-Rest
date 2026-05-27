@@ -17,17 +17,12 @@ export function getCategory(slug: string): Category {
 
 export function getCardsForCategory(slug: string): CardItem[] {
   const maps: Record<string, CardItem[]> = {
-    guides: guides.map((guide) => ({
-      title: guide.title,
-      href: `/guides/${guide.slug}`,
-      description: guide.description,
-      meta: guide.category,
-    })),
+    guides: guides.map(guideToCard),
     recipes: recipes.map((recipe) => ({
       title: recipe.name,
       href: `/recipes/${recipe.slug}`,
       description: recipe.description,
-      meta: `${recipe.craftingStation} · Level ${recipe.unlockLevel}`,
+      meta: `${recipe.craftingStation} - Level ${recipe.unlockLevel}`,
     })),
     ingredients: ingredients.map((ingredient) => ({
       title: ingredient.name,
@@ -58,29 +53,64 @@ export function getGuide(slug: string): Guide | undefined {
   return guides.find((guide) => guide.slug === slug);
 }
 
+export function guideToCard(guide: Guide): CardItem {
+  return {
+    title: guide.title,
+    href: `/guides/${guide.slug}`,
+    description: guide.description,
+    meta: guide.category,
+  };
+}
+
+export function getLatestGuideCards(limit = 6): CardItem[] {
+  return guides.slice(0, limit).map(guideToCard);
+}
+
+export function getBeginnerGuideCards(): CardItem[] {
+  return guides
+    .filter((guide) => guide.category === "Beginner Guides")
+    .slice(0, 4)
+    .map(guideToCard);
+}
+
 export function getPopularPages(): CardItem[] {
   return [
-    {
-      title: "Beginner Tavern Guide",
-      href: "/guides/beginner-tavern-guide",
-      description: "Start with the right daily loop for service, food, drinks, and reputation.",
-      meta: "Beginner",
-    },
-    {
-      title: "Roast Fish",
-      href: "/recipes/roast-fish",
-      description: "A practical early cooked dish for fishing-heavy starts.",
-      meta: "Recipe",
-    },
-    {
-      title: "Barley",
-      href: "/ingredients/barley",
-      description: "A core crop for brewing and tavern production chains.",
-      meta: "Ingredient",
-    },
-  ];
+    "beginner-tavern-guide",
+    "how-to-make-money-early-game",
+    "how-to-increase-reputation",
+    "best-early-game-recipes",
+    "brewing-basics",
+    "crafting-stations",
+  ]
+    .map((slug) => getGuide(slug))
+    .filter((guide): guide is Guide => Boolean(guide))
+    .map(guideToCard);
 }
 
 export function getRelatedGuides(currentPath: string): CardItem[] {
-  return getPopularPages().filter((item) => item.href !== currentPath).slice(0, 3);
+  const currentSlug = currentPath.split("/").filter(Boolean).at(-1);
+  const currentGuide = currentSlug ? getGuide(currentSlug) : undefined;
+  const related = currentGuide
+    ? currentGuide.relatedSlugs
+        .map((slug) => getGuide(slug))
+        .filter((guide): guide is Guide => Boolean(guide))
+    : [];
+  const fallback = guides.filter((guide) => `/guides/${guide.slug}` !== currentPath);
+  const merged = [...related, ...fallback].filter(
+    (guide, index, all) => all.findIndex((item) => item.slug === guide.slug) === index,
+  );
+
+  return merged.slice(0, 4).map(guideToCard);
+}
+
+export function getGuideNavigation(slug: string): {
+  previous?: CardItem;
+  next?: CardItem;
+} {
+  const index = guides.findIndex((guide) => guide.slug === slug);
+
+  return {
+    previous: index > 0 ? guideToCard(guides[index - 1]) : undefined,
+    next: index >= 0 && index < guides.length - 1 ? guideToCard(guides[index + 1]) : undefined,
+  };
 }

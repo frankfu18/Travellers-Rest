@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 import { TableOfContents } from "@/components/table-of-contents";
 import { recipes } from "@/data/recipes";
 import { getRecipe, getRelatedGuides } from "@/lib/content";
-import { articleSchema, breadcrumbSchema, createMetadata } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, createMetadata, faqSchema } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: recipe.description,
     path: `/recipes/${recipe.slug}`,
     type: "article",
+    keywords: recipe.keywords,
   });
 }
 
@@ -71,6 +72,7 @@ export default async function RecipePage({ params }: PageProps) {
             { name: "Recipes", path: "/recipes" },
             { name: recipe.name, path },
           ]),
+          faqSchema(recipe.faq),
         ]}
       />
       <Breadcrumbs
