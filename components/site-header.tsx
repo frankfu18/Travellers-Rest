@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SearchBox } from "@/components/search-box";
 import { categories } from "@/data/categories";
 
 export function SiteHeader() {
@@ -14,7 +15,7 @@ export function SiteHeader() {
             <span className="block text-xs text-stone-300">Guide Database</span>
           </span>
         </Link>
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary navigation">
           {categories.slice(0, 7).map((category) => (
             <Link
               key={category.slug}
@@ -25,6 +26,12 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+        <div className="hidden lg:block">
+          <SearchBox compact />
+        </div>
+        <Link href="/search" className="rounded px-3 py-2 text-sm font-semibold text-amber-100 hover:bg-amber-200/10 lg:hidden">
+          Search
+        </Link>
       </div>
     </header>
   );

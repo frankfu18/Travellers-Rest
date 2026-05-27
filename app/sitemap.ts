@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const staticRoutes = [
     "",
+    "/search",
     ...categories.map((category) => category.href),
     "/tools/profit-calculator",
     "/tools/brewing-guide",

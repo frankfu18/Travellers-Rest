@@ -7,6 +7,7 @@ import { SearchBox } from "@/components/search-box";
 import { categories } from "@/data/categories";
 import { createMetadata } from "@/lib/seo";
 import { getBeginnerGuideCards, getLatestGuideCards, getPopularPages } from "@/lib/content";
+import { popularSearches } from "@/lib/search";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = createMetadata({
@@ -26,14 +27,6 @@ export default function HomePage() {
   const beginnerGuides = getBeginnerGuideCards();
   const latestGuides = getLatestGuideCards(6);
   const popularPages = getPopularPages();
-  const popularSearches = [
-    { label: "Travellers Rest beginner guide", href: "/guides/beginner-tavern-guide" },
-    { label: "Travellers Rest make money early game", href: "/guides/how-to-make-money-early-game" },
-    { label: "Travellers Rest reputation", href: "/guides/how-to-increase-reputation" },
-    { label: "Travellers Rest more customers", href: "/guides/how-to-get-more-customers" },
-    { label: "Travellers Rest brewing", href: "/guides/brewing-basics" },
-    { label: "Travellers Rest best early recipes", href: "/guides/best-early-game-recipes" },
-  ];
   const primaryCategories = categories.filter((category) =>
     ["recipes", "ingredients", "drinks", "crops", "fish", "mining", "crafting", "npcs"].includes(category.slug),
   );
@@ -138,11 +131,11 @@ export default function HomePage() {
           <div className="mt-5 flex flex-wrap gap-2">
             {popularSearches.map((search) => (
               <Link
-                key={search.href}
-                href={search.href}
+                key={search}
+                href={`/search?q=${encodeURIComponent(search)}`}
                 className="rounded border border-amber-200/20 bg-amber-200/10 px-3 py-2 text-sm font-semibold text-stone-200 hover:border-amber-200/45 hover:text-amber-100"
               >
-                {search.label}
+                {search}
               </Link>
             ))}
           </div>
