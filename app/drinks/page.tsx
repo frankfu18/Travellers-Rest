@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { CategoryPage } from "@/components/category-page";
-import { getCardsForCategory, getCategory } from "@/lib/content";
+import { DatabaseListPage } from "@/components/database-list-page";
+import { drinks } from "@/data/drinks";
+import { getCategory, getEntryPath } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 const category = getCategory("drinks");
@@ -13,5 +14,17 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default function DrinksPage() {
-  return <CategoryPage category={category} items={getCardsForCategory(category.slug)} />;
+  return (
+    <DatabaseListPage
+      category={category}
+      items={drinks.map((drink) => ({
+        slug: drink.slug,
+        name: drink.name,
+        description: drink.description,
+        category: drink.category,
+        dataStatus: drink.dataStatus,
+        href: getEntryPath(drink),
+      }))}
+    />
+  );
 }

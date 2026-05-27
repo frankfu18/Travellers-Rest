@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { DatabaseListPage } from "@/components/database-list-page";
-import { crops } from "@/data/crops";
+import { fish } from "@/data/fish";
 import { getCategory, getEntryPath } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
-const category = getCategory("crops");
+const category = getCategory("fish");
 
 export const metadata: Metadata = createMetadata({
   title: category.title,
@@ -13,17 +13,17 @@ export const metadata: Metadata = createMetadata({
   keywords: category.keywords,
 });
 
-export default function CropsPage() {
+export default function FishPage() {
   return (
     <DatabaseListPage
       category={category}
-      items={crops.map((crop) => ({
-        slug: crop.slug,
-        name: crop.name,
-        description: crop.description,
-        category: crop.category,
-        dataStatus: crop.dataStatus,
-        href: getEntryPath(crop),
+      items={fish.map((item) => ({
+        slug: item.slug,
+        name: item.name,
+        description: item.description,
+        category: item.category,
+        dataStatus: item.dataStatus,
+        href: getEntryPath(item),
       }))}
     />
   );

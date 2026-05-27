@@ -42,12 +42,20 @@ export const categories: Category[] = [
     keywords: ["Travellers Rest crops", "farming"],
   },
   {
+    slug: "fish",
+    href: "/fish",
+    name: "Fish",
+    title: "Travellers Rest Fish",
+    description: "Fish locations, recipe uses, bait notes, and early-game fishing tips.",
+    keywords: ["Travellers Rest fishing", "fish"],
+  },
+  {
     slug: "fishing",
     href: "/fishing",
     name: "Fishing",
     title: "Travellers Rest Fishing",
-    description: "Fish locations, recipe uses, bait notes, and early-game fishing tips.",
-    keywords: ["Travellers Rest fishing", "fish"],
+    description: "Fishing basics, fish uses, and route planning for tavern food supply.",
+    keywords: ["Travellers Rest fishing", "fish guide"],
   },
   {
     slug: "mining",
@@ -72,5 +80,13 @@ export const categories: Category[] = [
     title: "Travellers Rest NPCs",
     description: "NPC references, services, vendors, and notable characters in Travellers Rest.",
     keywords: ["Travellers Rest NPCs", "vendors"],
+  },
+  {
+    slug: "tools",
+    href: "/tools",
+    name: "Tools",
+    title: "Travellers Rest Tools",
+    description: "Profit, brewing, and aging planning tools for Travellers Rest.",
+    keywords: ["Travellers Rest tools", "profit calculator", "brewing guide"],
   },
 ];

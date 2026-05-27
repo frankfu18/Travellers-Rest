@@ -35,7 +35,7 @@ export default function HomePage() {
     { label: "Travellers Rest best early recipes", href: "/guides/best-early-game-recipes" },
   ];
   const primaryCategories = categories.filter((category) =>
-    ["recipes", "ingredients", "drinks", "crops", "fishing", "mining", "crafting", "npcs"].includes(category.slug),
+    ["recipes", "ingredients", "drinks", "crops", "fish", "mining", "crafting", "npcs"].includes(category.slug),
   );
 
   return (
@@ -97,8 +97,8 @@ export default function HomePage() {
             <h2 className="mt-3 text-3xl font-black text-amber-50">Plan the tavern, then scale the menu.</h2>
             <p className="mt-4 text-stone-300">
               Travellers Rest is built around repeatable production loops: grow ingredients, cook recipes, brew drinks,
-              serve customers, improve reputation, and expand the tavern. This site is structured as a static wiki so
-              pages can be generated quickly from clean data files.
+              serve customers, improve reputation, and expand the tavern. This site keeps those systems connected so
+              every database page can point toward useful next steps.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">

@@ -15,7 +15,7 @@ A lightweight Next.js App Router website for a Travellers Rest wiki-style guide 
 ```txt
 app/         Route pages, metadata, sitemap, robots, and global layout
 components/  Reusable UI blocks such as cards, breadcrumbs, info tables, FAQ, TOC
-data/        Mock content records for recipes, ingredients, guides, categories, and placeholders
+data/        Content records for recipes, ingredients, drinks, crops, fish, guides, and categories
 lib/         Site config, SEO helpers, and content lookup helpers
 types/       Shared TypeScript content models
 public/      Static assets such as the tavern hero image

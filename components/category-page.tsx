@@ -17,7 +17,7 @@ export function CategoryPage({ category, items }: { category: Category; items: C
         <div className="mb-5 flex flex-col gap-3 border-b border-amber-200/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-amber-50">Pages</h2>
-            <p className="text-sm text-stone-400">Static card list now, pagination-ready structure later.</p>
+            <p className="text-sm text-stone-400">Browse related Travellers Rest pages and planning references.</p>
           </div>
           <nav aria-label={`${category.name} pagination`} className="flex items-center gap-2 text-sm">
             <span className="rounded border border-amber-200/20 bg-amber-200/10 px-3 py-1 text-amber-100">Page 1</span>

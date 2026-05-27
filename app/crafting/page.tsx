@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { CategoryPage } from "@/components/category-page";
-import { getCardsForCategory, getCategory } from "@/lib/content";
+import { DatabaseListPage } from "@/components/database-list-page";
+import { craftingStations } from "@/data/crafting-stations";
+import { getCategory, getEntryPath } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 const category = getCategory("crafting");
@@ -13,5 +14,17 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default function CraftingPage() {
-  return <CategoryPage category={category} items={getCardsForCategory(category.slug)} />;
+  return (
+    <DatabaseListPage
+      category={category}
+      items={craftingStations.map((station) => ({
+        slug: station.slug,
+        name: station.name,
+        description: station.description,
+        category: station.category,
+        dataStatus: station.dataStatus,
+        href: getEntryPath(station),
+      }))}
+    />
+  );
 }

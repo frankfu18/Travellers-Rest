@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { CategoryPage } from "@/components/category-page";
-import { getCardsForCategory, getCategory } from "@/lib/content";
+import { DatabaseListPage } from "@/components/database-list-page";
+import { recipes } from "@/data/recipes";
+import { getCategory, getEntryPath } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 const category = getCategory("recipes");
@@ -13,5 +14,17 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default function RecipesPage() {
-  return <CategoryPage category={category} items={getCardsForCategory(category.slug)} />;
+  return (
+    <DatabaseListPage
+      category={category}
+      items={recipes.map((recipe) => ({
+        slug: recipe.slug,
+        name: recipe.name,
+        description: recipe.description,
+        category: recipe.category,
+        dataStatus: recipe.dataStatus,
+        href: getEntryPath(recipe),
+      }))}
+    />
+  );
 }
