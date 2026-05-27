@@ -8,6 +8,10 @@ export const metadata: Metadata = createMetadata({
   description: "Search Travellers Rest guides, recipes, drinks, ingredients, crops, fish, crafting stations, and tools.",
   path: "/search",
   keywords: ["Travellers Rest search", "Travellers Rest database", "Travellers Rest guide search"],
+  robots: {
+    index: false,
+    follow: true,
+  },
 });
 
 export default function SearchPage() {

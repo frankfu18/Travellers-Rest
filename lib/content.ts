@@ -48,6 +48,7 @@ export function getEntryPath(entry: DatabaseEntry): string {
 export function formatDataStatus(status: DatabaseEntry["dataStatus"]): string {
   const labels: Record<DatabaseEntry["dataStatus"], string> = {
     verified: "Verified",
+    completed: "Completed",
     needs_verification: "Needs verification",
     estimated: "Estimated",
   };
@@ -165,6 +166,141 @@ export function getGuideNavigation(slug: string): {
     previous: index > 0 ? guideToCard(guides[index - 1]) : undefined,
     next: index >= 0 && index < guides.length - 1 ? guideToCard(guides[index + 1]) : undefined,
   };
+}
+
+export function getGuideDatabaseLinks(slug: string): CardItem[] {
+  const bySlug: Record<string, string[]> = {
+    "beginner-tavern-guide": ["/recipes", "/drinks", "/ingredients/barley", "/crops/carrot"],
+    "how-to-make-money-early-game": ["/tools/profit-calculator", "/recipes/roast-fish", "/recipes/vegetable-stew", "/drinks/light-beer"],
+    "how-to-increase-reputation": ["/recipes", "/drinks", "/crafting/kitchen", "/ingredients"],
+    "how-to-get-more-customers": ["/drinks/light-beer", "/recipes/vegetable-stew", "/crafting/dining-table", "/recipes"],
+    "brewing-basics": ["/drinks", "/drinks/light-beer", "/ingredients/barley", "/ingredients/hops"],
+    "farming-basics": ["/crops", "/crops/carrot", "/ingredients/carrot", "/recipes/vegetable-stew"],
+    "fishing-basics": ["/fish", "/fish/river-fish", "/ingredients/any-fish", "/recipes/roast-fish"],
+    "mining-basics": ["/crafting", "/crafting/forge", "/crafting/workbench", "/tools/profit-calculator"],
+    "crafting-stations": ["/crafting", "/crafting/kitchen", "/crafting/brewing-barrel", "/recipes"],
+    "best-early-game-recipes": ["/recipes", "/recipes/roast-fish", "/recipes/vegetable-stew", "/ingredients"],
+  };
+
+  const cards: Record<string, CardItem> = {
+    "/recipes": {
+      title: "Recipes Database",
+      href: "/recipes",
+      description: "Browse recipe pages and compare ingredients, stations, and related items.",
+      meta: "Recipes",
+    },
+    "/drinks": {
+      title: "Drinks Database",
+      href: "/drinks",
+      description: "Browse beer, cider, wine, and other drink entries for tavern service planning.",
+      meta: "Drinks",
+    },
+    "/ingredients": {
+      title: "Ingredients Database",
+      href: "/ingredients",
+      description: "Find crop, fish, brewing, animal, and shop ingredients used across recipes and drinks.",
+      meta: "Ingredients",
+    },
+    "/crops": {
+      title: "Crops Database",
+      href: "/crops",
+      description: "Browse crop entries and connect harvest planning to cooking and brewing routes.",
+      meta: "Crops",
+    },
+    "/fish": {
+      title: "Fish Database",
+      href: "/fish",
+      description: "Browse fish entries and connect catches to recipe planning.",
+      meta: "Fish",
+    },
+    "/crafting": {
+      title: "Crafting Stations Database",
+      href: "/crafting",
+      description: "Browse stations used for cooking, brewing, processing, storage, and production planning.",
+      meta: "Crafting",
+    },
+    "/tools/profit-calculator": {
+      title: "Profit Calculator",
+      href: "/tools/profit-calculator",
+      description: "Estimate profit and margin from an item's sell price and ingredient cost.",
+      meta: "Tool",
+    },
+  };
+
+  const entryCards = [...recipes, ...drinks, ...ingredients, ...crops, ...fish, ...craftingStations].reduce<Record<string, CardItem>>((acc, item) => {
+    acc[getEntryPath(item)] = {
+      title: item.name,
+      href: getEntryPath(item),
+      description: item.description,
+      meta: item.category,
+    };
+    return acc;
+  }, {});
+
+  return (bySlug[slug] ?? ["/recipes", "/drinks", "/ingredients", "/crafting"])
+    .map((href) => cards[href] ?? entryCards[href])
+    .filter((item): item is CardItem => Boolean(item));
+}
+
+export function getGuideMistakes(slug: string): string[] {
+  const mistakes: Record<string, string[]> = {
+    "beginner-tavern-guide": [
+      "Opening before food, drinks, and cleaning are ready, then spending the whole service reacting to shortages.",
+      "Unlocking new systems faster than the tavern can supply them, which makes the day feel busy without improving income.",
+      "Ignoring small layout friction because it looks harmless; repeated walking and cleaning problems add up over many service days.",
+    ],
+    "how-to-make-money-early-game": [
+      "Chasing one theoretical best item while the tavern runs out of dependable stock.",
+      "Selling or consuming ingredients before deciding which recipe or drink chain needs them most.",
+      "Buying upgrades that look exciting but do not solve the bottleneck limiting today's income.",
+    ],
+    "how-to-increase-reputation": [
+      "Trying to force reputation growth with expansion while service quality, stock, and cleanliness are still inconsistent.",
+      "Treating reputation as a separate grind instead of the result of many reliable service days.",
+      "Adding more seats or menu variety before the tavern can serve the customers it already has.",
+    ],
+    "how-to-get-more-customers": [
+      "Pushing customer traffic before the menu, drinks, seating, and cleaning routine can absorb the extra demand.",
+      "Adding capacity without checking whether production stations and ingredient supply can keep up.",
+      "Confusing a bigger room with a smoother room; customers are easier to serve when paths and work zones stay readable.",
+    ],
+    "brewing-basics": [
+      "Starting too many drink chains at once and draining ingredients that the kitchen or farm plan also needs.",
+      "Waiting until service starts to notice that drinks are unfinished, unstocked, or blocked behind station time.",
+      "Judging brewing only by product value instead of ingredient reliability, station capacity, and service timing.",
+    ],
+    "farming-basics": [
+      "Growing a wide mix of crops without connecting them to the recipes and drinks actually served in the tavern.",
+      "Letting storage fill with unused harvests while key menu ingredients run short.",
+      "Changing the farm plan based on guesses instead of reviewing what sold, what ran out, and what stayed unused.",
+    ],
+    "fishing-basics": [
+      "Fishing for most of the day when the tavern still needs preparation, cleaning, farming, or brewing attention.",
+      "Keeping catches in storage instead of turning reliable fish supply into practical menu value.",
+      "Building a core food plan around fish you cannot catch consistently in your current routine.",
+    ],
+    "mining-basics": [
+      "Mining without a station, upgrade, or material goal, then returning with clutter instead of progress.",
+      "Leaving the tavern understocked for a mining trip and losing service quality afterward.",
+      "Gathering materials before identifying whether the real bottleneck is equipment, ingredients, layout, or service timing.",
+    ],
+    "crafting-stations": [
+      "Building several new stations at once before the farm, storage, and service routine can support the new chains.",
+      "Choosing stations because they are new rather than because they remove a bottleneck from the current tavern loop.",
+      "Forgetting that stations still need ingredients and time; idle equipment is not progress by itself.",
+    ],
+    "best-early-game-recipes": [
+      "Choosing recipes only by expected value while ignoring whether the ingredients can be replaced consistently.",
+      "Adding too many menu items before a small core menu can stay stocked through normal service.",
+      "Using key brewing, farming, or animal ingredients in recipes without checking what other products depend on them.",
+    ],
+  };
+
+  return mistakes[slug] ?? [
+    "Expanding the tavern loop before the supply chain is stable.",
+    "Treating new unlocks as mandatory instead of matching them to current bottlenecks.",
+    "Ignoring what each service day reveals about stock, layout, and customer flow.",
+  ];
 }
 
 export function getUsedInRecipes(slug: string): Recipe[] {

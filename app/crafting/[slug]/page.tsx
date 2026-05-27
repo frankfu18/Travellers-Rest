@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { DatabaseDetailPage } from "@/components/database-detail-page";
 import { craftingStations } from "@/data/crafting-stations";
 import { getCraftingStation } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, databaseRobots } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     path: `/crafting/${station.slug}`,
     type: "article",
     keywords: station.keywords,
+    robots: databaseRobots(station.dataStatus),
   });
 }
 

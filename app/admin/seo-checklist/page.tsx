@@ -6,6 +6,10 @@ export const metadata: Metadata = createMetadata({
   title: "SEO Checklist - Travellers Rest Guide",
   description: "Internal SEO checklist for Travellers Rest Guide content coverage and search index size.",
   path: "/admin/seo-checklist",
+  robots: {
+    index: false,
+    follow: true,
+  },
 });
 
 const types: SearchItemType[] = ["guide", "recipe", "drink", "ingredient", "crop", "fish", "station", "tool"];

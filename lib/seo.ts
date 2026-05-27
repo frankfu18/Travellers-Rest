@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
+import type { DataStatus } from "@/types/content";
 
 type SeoInput = {
   title: string;
@@ -7,9 +8,10 @@ type SeoInput = {
   path: string;
   type?: "website" | "article";
   keywords?: string[];
+  robots?: Metadata["robots"];
 };
 
-export function createMetadata({ title, description, path, type = "website", keywords }: SeoInput): Metadata {
+export function createMetadata({ title, description, path, type = "website", keywords, robots }: SeoInput): Metadata {
   const url = `${siteConfig.url}${path}`;
   const baseOpenGraph = {
     title,
@@ -30,6 +32,7 @@ export function createMetadata({ title, description, path, type = "website", key
     title,
     description,
     keywords,
+    robots,
     alternates: {
       canonical: path,
     },
@@ -40,6 +43,15 @@ export function createMetadata({ title, description, path, type = "website", key
       description,
       images: ["/images/tavern-hero.png"],
     },
+  };
+}
+
+export function databaseRobots(status: DataStatus): Metadata["robots"] {
+  const canIndex = status === "verified" || status === "completed";
+
+  return {
+    index: canIndex,
+    follow: true,
   };
 }
 

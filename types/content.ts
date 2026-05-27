@@ -1,6 +1,6 @@
 export type ContentKind = "recipe" | "ingredient" | "drink" | "crop" | "fish" | "station" | "guide";
 
-export type DataStatus = "verified" | "needs_verification" | "estimated";
+export type DataStatus = "verified" | "completed" | "needs_verification" | "estimated";
 
 export type DataQuality = {
   dataStatus: DataStatus;

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { DatabaseDetailPage } from "@/components/database-detail-page";
 import { drinks } from "@/data/drinks";
 import { getDrink } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, databaseRobots } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     path: `/drinks/${drink.slug}`,
     type: "article",
     keywords: drink.keywords,
+    robots: databaseRobots(drink.dataStatus),
   });
 }
 

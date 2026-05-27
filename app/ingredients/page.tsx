@@ -11,6 +11,10 @@ export const metadata: Metadata = createMetadata({
   description: category.description,
   path: category.href,
   keywords: category.keywords,
+  robots: {
+    index: false,
+    follow: true,
+  },
 });
 
 export default function IngredientsPage() {

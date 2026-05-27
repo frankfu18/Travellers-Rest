@@ -15,6 +15,7 @@ export type DatabaseListItem = {
 
 const statusLabels: Record<DataStatus, string> = {
   verified: "Verified",
+  completed: "Completed",
   needs_verification: "Needs verification",
   estimated: "Estimated",
 };
