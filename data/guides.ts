@@ -765,4 +765,319 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    id: "guide-first-week",
+    slug: "what-to-do-first-week",
+    title: "Travellers Rest What to Do First Week",
+    description:
+      "A first-week Travellers Rest guide for setting up stock, service flow, farming priorities, early upgrades, and a stable tavern routine.",
+    category: "Beginner",
+    keywords: ["Travellers Rest first week", "Travellers Rest what to do first", "Travellers Rest beginner week"],
+    updatedAt: "2026-05-28",
+    readingTime: "10 min read",
+    relatedSlugs: ["beginner-tavern-guide", "how-to-make-money-early-game", "how-to-avoid-stock-shortages"],
+    sections: [
+      {
+        id: "first-week-goal",
+        title: "Your First Week Goal Is Stability",
+        body: [
+          "The first week in Travellers Rest should be treated as a setup period, not a race to unlock every system. Your real goal is to build a routine you can repeat: prepare stock, open with enough food and drink, keep the room clean, watch what customers consume, and use the next day to repair the weakest part of that loop. If you rush upgrades before the loop is stable, the tavern can become busy without becoming stronger.",
+          "Start by keeping the menu narrow. A few dependable foods and drinks teach you more than a scattered collection of items you cannot replace. When exact prices or unlock timing differ by version, focus on the decision logic: can you restock it, does it use a station you can support, and does it help service today? That mindset makes the first week calmer and gives every later upgrade a purpose.",
+        ],
+      },
+      {
+        id: "daily-routine",
+        title: "Build a Daily Routine Before Expanding",
+        body: [
+          "A useful day starts before you open. Check the bar, check prepared food, clean obvious messes, and decide whether the farm, fishing, brewing, or crafting needs attention before service. If you begin the day already behind, customers will expose every missing item and awkward path. Preparation is not wasted time; it is what lets the tavern earn without constant interruption.",
+          "After service, do a short review. What ran out first? Did drinks disappear faster than food? Did a station sit idle because an ingredient was missing? Did cleaning pull you away from serving? These observations are better than a fixed universal route because they come from your tavern. Use them to choose tomorrow's first task.",
+        ],
+      },
+      {
+        id: "first-week-supply",
+        title: "Connect Farming, Fishing, and Recipes",
+        body: [
+          "The first week becomes easier when gathering supports the menu. If your food plan uses vegetables, the farm should serve that plan. If you fish often, add fish-based meals only when catches are consistent enough to support service. If brewing starts to matter, protect grain, hops, fruit, or other drink inputs from being consumed by unrelated recipes.",
+          "Do not treat ingredients as random storage. Every ingredient should have a likely destination: food, drink, reserve, or later test. If an ingredient has no plan, it can wait. If an ingredient supports the core menu, protect it. This is the simplest way to avoid the early-game feeling that everything is always missing.",
+        ],
+      },
+      {
+        id: "first-week-upgrades",
+        title: "Choose Upgrades That Fix Repeated Problems",
+        body: [
+          "The best first-week upgrade is the one that fixes a problem you have seen more than once. If cooking cannot keep up, look at food production and station flow. If drinks run dry, look at brewing and ingredient supply. If the room feels crowded or dirty, adjust layout and cleaning flow before adding more demand. Upgrades should make tomorrow easier, not just make the tavern look busier.",
+          "When you are unsure, delay expansion and improve reliability. A small tavern that opens prepared will usually feel better than a larger tavern that strains every system. Once the routine feels repeatable, bigger changes become safer because you can clearly see what the new upgrade changes.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "What should I do first in Travellers Rest?",
+        answer:
+          "Build a stable service loop: stock food and drinks, keep the room clean, watch what runs out, and improve one bottleneck at a time.",
+      },
+      {
+        question: "Should I expand during the first week?",
+        answer:
+          "Expand only when your food, drink, cleaning, and layout can handle more demand without creating constant shortages.",
+      },
+      {
+        question: "How do I know what to upgrade first?",
+        answer:
+          "Choose the upgrade that fixes a repeated problem from recent service days rather than buying whatever looks newest.",
+      },
+    ],
+  },
+  {
+    id: "guide-best-early-upgrades",
+    slug: "best-early-game-upgrades",
+    title: "Travellers Rest Best Early Game Upgrades",
+    description:
+      "A practical guide to choosing early Travellers Rest upgrades that improve stock, service flow, production, and tavern growth without overextending.",
+    category: "Money",
+    keywords: ["Travellers Rest early upgrades", "Travellers Rest best upgrades", "Travellers Rest upgrade guide"],
+    updatedAt: "2026-05-28",
+    readingTime: "10 min read",
+    relatedSlugs: ["how-to-make-money-early-game", "crafting-stations", "tavern-layout-tips"],
+    sections: [
+      {
+        id: "upgrade-bottlenecks",
+        title: "Upgrade Bottlenecks, Not Hopes",
+        body: [
+          "Early upgrades should answer a problem your tavern already has. If you are low on stock, a comfort upgrade will not solve the missing menu. If customers move awkwardly, more production may not fix the room. If drinks run out, more seats can make the problem worse. The strongest upgrade path starts by naming the bottleneck before spending coins or materials.",
+          "A simple test works well: ask what tomorrow looks like after the upgrade. If the answer is clearer service, easier stock, faster production, or a cleaner room, the upgrade may be worth considering. If the answer is only that the tavern looks bigger, wait until the support systems are ready.",
+        ],
+      },
+      {
+        id: "production-upgrades",
+        title: "Production Upgrades Should Feed the Menu",
+        body: [
+          "Stations and production tools are valuable when they support items you actually serve. A station that unlocks new possibilities can still be a poor early purchase if your ingredients cannot feed it. Before buying or building, list the recipes, drinks, or processing steps it will improve. If the list is thin, the upgrade may belong later.",
+          "Production upgrades also create scheduling pressure. A new station needs ingredients, time, and attention. If you already struggle to prepare before opening, adding a new chain can make the day harder. Use the stations database and crafting guide to compare use cases, then choose the station that removes a repeated production delay.",
+        ],
+      },
+      {
+        id: "room-upgrades",
+        title: "Room Upgrades Should Improve Flow",
+        body: [
+          "Room upgrades are not only about capacity. More tables, better layout, and comfort improvements should make service smoother. If extra furniture blocks paths or increases cleaning pressure too quickly, it can reduce the benefit of more customers. A clean and readable room often beats a crowded room with higher theoretical demand.",
+          "Before changing the room, walk mentally through service. Where do you move often? Which areas need cleaning? Where do customers gather? Keep work paths clear and add capacity slowly. The goal is to make the tavern feel easier to operate during a busy day, not just larger on paper.",
+        ],
+      },
+      {
+        id: "when-to-delay-upgrades",
+        title: "When Not to Upgrade Yet",
+        body: [
+          "Do not upgrade when you cannot explain what the upgrade fixes. Do not upgrade when your core menu already runs out. Do not upgrade when a new system would consume ingredients that your current money loop depends on. Delay is not failure; it is how you protect the tavern from complexity it cannot support yet.",
+          "A good early upgrade should make the next several days easier. If it creates more chores than it solves, return to stock planning, farming, brewing, or layout cleanup first. The right upgrade at the right time feels like relief. The wrong upgrade feels like another problem to manage.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best early upgrade in Travellers Rest?",
+        answer:
+          "The best upgrade is the one that fixes your current bottleneck, such as food preparation, drink supply, room flow, or station capacity.",
+      },
+      {
+        question: "Should I buy more seating early?",
+        answer:
+          "Only if your stock, cleaning, and service flow can handle more customers without creating shortages.",
+      },
+      {
+        question: "Are crafting stations always worth buying early?",
+        answer:
+          "Stations are worth prioritizing when they support products you can make consistently. If they would sit idle, delay them.",
+      },
+    ],
+  },
+  {
+    id: "guide-avoid-stock-shortages",
+    slug: "how-to-avoid-stock-shortages",
+    title: "Travellers Rest How to Avoid Stock Shortages",
+    description:
+      "Learn how to avoid food, drink, and ingredient shortages in Travellers Rest with better menu planning, reserves, farming, brewing, and service routines.",
+    category: "Tavern Management",
+    keywords: ["Travellers Rest stock shortages", "Travellers Rest food shortage", "Travellers Rest drink shortage"],
+    updatedAt: "2026-05-28",
+    readingTime: "10 min read",
+    relatedSlugs: ["farming-basics", "brewing-basics", "best-early-game-recipes"],
+    sections: [
+      {
+        id: "shortages-are-system-problems",
+        title: "Shortages Are Usually System Problems",
+        body: [
+          "A stock shortage is rarely just one missing item. It usually means the tavern menu, ingredient plan, station schedule, and service timing are not aligned. If food runs out, the issue might be recipes that use awkward ingredients. If drinks run out, the issue might be brewing too late or using key crops elsewhere. If ingredients run out, the farm or gathering plan may not match the menu.",
+          "Treat each shortage as information. The item that ran out first points to the part of the system that needs attention. Do not immediately add more menu variety. First make the core menu dependable, then add variety when the tavern can support it without breaking the loop.",
+        ],
+      },
+      {
+        id: "build-a-core-stock-list",
+        title: "Build a Core Stock List",
+        body: [
+          "Choose a small set of food and drink that you expect to serve regularly. These are your core stock items. They should use ingredients you can replace through farming, fishing, processing, or predictable shopping. The list should be small enough that you can check it quickly before opening.",
+          "When a core item runs low, refill it before testing something new. This habit prevents the common beginner pattern where storage is full of interesting items but the tavern still lacks what customers actually consume. A core list turns stock planning from guessing into routine.",
+        ],
+      },
+      {
+        id: "protect-shared-ingredients",
+        title: "Protect Shared Ingredients",
+        body: [
+          "Some ingredients can support multiple chains. A crop might feed a recipe and a drink. A processed ingredient might support baking and brewing. If you use all of it in one product, another product may quietly fail tomorrow. Shared ingredients need a plan before service starts.",
+          "The easiest fix is to reserve ingredients for the products that matter most. If drinks are your income base, protect brewing inputs. If a food item keeps customers served, protect its vegetables, fish, or animal products. Keep experimental recipes away from ingredients that hold the core menu together.",
+        ],
+      },
+      {
+        id: "use-reserves-without-hoarding",
+        title: "Use Reserves Without Hoarding",
+        body: [
+          "A reserve is not random hoarding. It is a small buffer for items that keep the tavern stable. Keep enough important ingredients and prepared stock to survive a missed harvest, a long fishing gap, or a busy service day. The exact amount depends on your tavern size and version, so focus on the logic: reserve what would hurt most if it disappeared.",
+          "Review reserves after service. If an item never gets used, reduce its priority. If an item disappears every day, grow or gather more of its inputs. Stock management should move with your actual tavern behavior, not stay locked to an early guess.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Why do I keep running out of food in Travellers Rest?",
+        answer:
+          "Your menu may be wider than your ingredient supply. Use fewer recipes and focus on foods you can restock consistently.",
+      },
+      {
+        question: "Why do I keep running out of drinks?",
+        answer:
+          "Drink shortages often come from brewing too late, lacking ingredients, or adding too many drink chains before one baseline drink is reliable.",
+      },
+      {
+        question: "Should I keep reserves?",
+        answer:
+          "Yes. Keep practical reserves for core ingredients and prepared items, but review them so storage does not fill with items you never use.",
+      },
+    ],
+  },
+  {
+    id: "guide-tavern-layout-tips",
+    slug: "tavern-layout-tips",
+    title: "Travellers Rest Tavern Layout Tips",
+    description:
+      "A Travellers Rest layout guide for cleaner service paths, better customer flow, easier cleaning, controlled expansion, and practical room planning.",
+    category: "Tavern Management",
+    keywords: ["Travellers Rest layout", "Travellers Rest tavern layout", "Travellers Rest customer flow"],
+    updatedAt: "2026-05-28",
+    readingTime: "9 min read",
+    relatedSlugs: ["how-to-get-more-customers", "how-to-increase-reputation", "best-early-game-upgrades"],
+    sections: [
+      {
+        id: "layout-is-service",
+        title: "Layout Is Part of Service",
+        body: [
+          "Tavern layout in Travellers Rest is not just decoration. It affects how easily you move, how quickly you notice mess, how crowded the room feels, and how well the tavern handles more customers. A layout that looks cozy but slows every chore can hurt the day more than a simple layout that keeps paths clear.",
+          "Start with readability. You should be able to understand the room at a glance: where customers sit, where you move often, and where cleaning problems appear. If you cannot read the room while service is busy, the layout is probably doing too much too early.",
+        ],
+      },
+      {
+        id: "keep-work-paths-clear",
+        title: "Keep Work Paths Clear",
+        body: [
+          "The most important layout rule is to protect the paths you use repeatedly. If furniture, stations, or decorations force extra walking, every service day becomes a little slower. Small delays are easy to ignore, but they matter because cleaning, serving, restocking, and checking the room all compete for attention.",
+          "When adding furniture, ask whether it improves service or simply fills space. Leave enough room to move around important areas. If you notice yourself getting stuck or circling around objects, simplify the room before expanding it.",
+        ],
+      },
+      {
+        id: "expand-capacity-slowly",
+        title: "Expand Capacity Slowly",
+        body: [
+          "More seating can increase demand, but demand is only useful when the tavern can satisfy it. If customers arrive faster than you can stock food, drinks, and clean the room, the extra capacity becomes pressure. Add capacity in steps and watch the next few service days before adding more.",
+          "A good layout expansion should feel like the same tavern running more smoothly, not a completely different routine. If the room becomes harder to clean or stock, pause and repair the flow. Better customer capacity starts with service readiness.",
+        ],
+      },
+      {
+        id: "separate-production-and-service-thinking",
+        title: "Separate Production and Service Thinking",
+        body: [
+          "Production stations and customer space solve different problems. A station bottleneck belongs in your production plan. A crowded room belongs in your layout plan. Mixing the two can lead to awkward spaces where stations, storage, and seating all compete for the same movement paths.",
+          "Think of the tavern as two loops: the customer loop and the work loop. Customers need a pleasant, readable room. You need clear access to chores, stock, and production decisions. A good layout respects both loops without turning the room into a maze.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Does layout matter in Travellers Rest?",
+        answer:
+          "Yes. Layout affects movement, cleaning, service flow, and how comfortably the tavern handles more customers.",
+      },
+      {
+        question: "Should I add more tables early?",
+        answer:
+          "Add tables only when food, drinks, cleaning, and room paths can support the extra traffic.",
+      },
+      {
+        question: "What makes a good tavern layout?",
+        answer:
+          "A good layout keeps work paths clear, makes mess easy to notice, and expands customer capacity without creating service chaos.",
+      },
+    ],
+  },
+  {
+    id: "guide-food-vs-drinks",
+    slug: "food-vs-drinks-early-game",
+    title: "Travellers Rest Food vs Drinks Early Game",
+    description:
+      "A practical Travellers Rest guide to balancing food and drinks in the early game, avoiding shortages, and choosing when to focus on cooking or brewing.",
+    category: "Drinks & Brewing",
+    keywords: ["Travellers Rest food vs drinks", "Travellers Rest early drinks", "Travellers Rest early food"],
+    updatedAt: "2026-05-28",
+    readingTime: "10 min read",
+    relatedSlugs: ["brewing-basics", "best-early-game-recipes", "how-to-avoid-stock-shortages"],
+    sections: [
+      {
+        id: "both-sides-matter",
+        title: "Food and Drinks Support Different Bottlenecks",
+        body: [
+          "Food and drinks both matter in Travellers Rest because customers create demand across the whole tavern. Food often depends on farming, fishing, animal products, or kitchen flow. Drinks often depend on brewing inputs, station timing, and bar readiness. If one side is strong and the other collapses, service still feels uneven.",
+          "The early goal is not to decide that food or drinks are always better. The goal is to identify which side your tavern can supply reliably today. A food-heavy tavern needs dependable ingredients and recipes. A drink-heavy tavern needs protected brewing inputs and enough time to prepare before service.",
+        ],
+      },
+      {
+        id: "start-with-a-baseline",
+        title: "Start With One Baseline Food and One Baseline Drink",
+        body: [
+          "A simple baseline gives the tavern something dependable to sell. Choose one food plan and one drink plan that match your current supply. If your farm is producing useful crops, food can be easier to stabilize. If brewing ingredients and station timing are under control, drinks can become a steady part of service.",
+          "Do not add too many products before the baseline works. If both food and drinks run out, the menu is probably too wide or the preparation routine is too thin. Fix the baseline first, then add variety from a position of control.",
+        ],
+      },
+      {
+        id: "watch-shared-inputs",
+        title: "Watch Ingredients That Cross Both Systems",
+        body: [
+          "Some inputs can create conflict between cooking and brewing. Grains, fruits, sweeteners, herbs, or other flexible ingredients may belong to several products depending on your route. If you spend them on food without thinking, drink production may suffer. If you spend them on drinks, the kitchen may lose a useful recipe.",
+          "Shared inputs should be assigned before production starts. Decide which chain has priority for the next service day. If both chains need the same ingredient, simplify one side or build more supply before expanding the menu.",
+        ],
+      },
+      {
+        id: "choose-focus-by-bottleneck",
+        title: "Choose Your Focus by Bottleneck",
+        body: [
+          "If customers are hungry and food stock disappears first, improve recipes, farming, fishing, or kitchen preparation. If the bar runs dry, improve brewing timing, ingredient reserves, or drink variety only after one baseline drink is reliable. Let the bottleneck choose the focus instead of following a fixed rule.",
+          "A balanced tavern does not mean equal complexity. It means both sides are dependable enough for the current customer flow. Sometimes that means simple food and stronger drinks. Sometimes it means a reliable food menu while brewing develops slowly. The right answer is the one your supply chain can repeat.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Should I focus on food or drinks early in Travellers Rest?",
+        answer:
+          "Focus on the side your tavern can supply reliably, then keep at least one simple option on the other side so service stays balanced.",
+      },
+      {
+        question: "Why do food and drinks compete?",
+        answer:
+          "Some ingredients and preparation time can support both cooking and brewing, so using them in one chain may weaken the other.",
+      },
+      {
+        question: "How do I balance food and drinks?",
+        answer:
+          "Keep one baseline food and one baseline drink reliable, then add variety only when ingredients and station time can support it.",
+      },
+    ],
+  },
 ];
