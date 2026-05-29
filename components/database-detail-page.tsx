@@ -6,7 +6,7 @@ import { Faq } from "@/components/faq";
 import { InfoTable } from "@/components/info-table";
 import { JsonLd } from "@/components/json-ld";
 import { TableOfContents } from "@/components/table-of-contents";
-import { getRelatedGuides, getRelatedItems } from "@/lib/content";
+import { formatDataStatus, getRelatedGuides, getRelatedItems } from "@/lib/content";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/seo";
 import type { CardItem, DatabaseEntry } from "@/types/content";
 
@@ -20,10 +20,12 @@ export function DatabaseDetailPage({ entry, sectionName, sectionHref }: Database
   const path = `${sectionHref}/${entry.slug}`;
   const relatedItems = getRelatedItems(entry);
   const relatedGuides = getRelatedGuides(path);
+  const isPublicSitemapEntry = entry.dataStatus === "verified" || entry.dataStatus === "completed";
   const toc = [
     { id: "quick-facts", title: "Quick Facts" },
     { id: "how-to-get", title: getHowToTitle(entry) },
     { id: "used-in", title: getUsedInTitle(entry) },
+    { id: "how-to-use", title: "How to Use This Item" },
     { id: "tips", title: "Tips" },
     { id: "faq-heading", title: "FAQ" },
   ];
@@ -57,6 +59,11 @@ export function DatabaseDetailPage({ entry, sectionName, sectionHref }: Database
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#f3c35a]">{entry.category}</p>
           <h1 className="mt-3 text-4xl font-black text-amber-50 lg:text-5xl">{entry.name} - Travellers Rest Guide</h1>
           <p className="mt-4 max-w-3xl text-lg text-stone-300">{entry.description}</p>
+          {!isPublicSitemapEntry ? (
+            <div className="mt-5 rounded border border-amber-200/20 bg-amber-200/10 p-4 text-sm text-amber-50">
+              This entry is still being checked and is not included in the public sitemap yet.
+            </div>
+          ) : null}
 
           <section id="how-to-get" className="mt-10">
             <h2 className="text-2xl font-bold text-amber-50">{getHowToTitle(entry)}</h2>
@@ -75,6 +82,15 @@ export function DatabaseDetailPage({ entry, sectionName, sectionHref }: Database
               ))}
             </div>
             {relatedItems.length > 0 ? <CardGrid items={relatedItems} /> : null}
+          </section>
+
+          <section id="how-to-use" className="mt-10">
+            <h2 className="text-2xl font-bold text-amber-50">How to Use This Item</h2>
+            <div className="mt-3 space-y-4 text-stone-300">
+              {getHowToUseParagraphs(entry).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </section>
 
           {entry.sections.map((section) => (
@@ -134,7 +150,7 @@ function CardGrid({ items }: { items: CardItem[] }) {
 function getQuickFacts(entry: DatabaseEntry): Array<{ label: string; value: React.ReactNode }> {
   const rows: Array<{ label: string; value: React.ReactNode }> = [
     { label: "Category", value: entry.category },
-    { label: "Data Status", value: entry.dataStatus.replace("_", " ") },
+    { label: "Data Status", value: formatDataStatus(entry.dataStatus) },
   ];
 
   if (entry.kind === "recipe") {
@@ -221,4 +237,41 @@ function getUsedInParagraphs(entry: DatabaseEntry): string[] {
   if (entry.kind === "fish") return [`${entry.name} can be used in fish-based recipes such as Roast Fish or Fish Pie when the recipe accepts fish.`];
   if (entry.kind === "station") return [`${entry.name} supports ${entry.usedFor.join(", ").toLowerCase()}. Choose it when those outputs solve your current bottleneck.`];
   return [`${entry.name} can appear in recipes, drinks, or production chains depending on its category and source.`];
+}
+
+function getHowToUseParagraphs(entry: DatabaseEntry): string[] {
+  if (entry.kind === "recipe") {
+    return [
+      `Use ${entry.name} as part of a food menu only when its ingredient groups are easy for your tavern to replace. Check whether the ${entry.station} is already busy before making it a core item.`,
+      "For profit planning, compare the full chain: ingredient source, station time, service demand, and what else the same inputs could become.",
+    ];
+  }
+  if (entry.kind === "drink") {
+    return [
+      `Use ${entry.name} when its ingredient groups fit your brewing routine and the ${entry.station} is not blocking a more reliable drink chain.`,
+      "Drinks work best when they are ready before service, so plan brewing around reserves, station timing, and the current customer flow.",
+    ];
+  }
+  if (entry.kind === "ingredient") {
+    return [
+      `Use ${entry.name} by assigning it to a clear food, drink, reserve, or production role before service starts.`,
+      "If the ingredient supports several products, protect the product that keeps your current tavern loop most stable.",
+    ];
+  }
+  if (entry.kind === "crop") {
+    return [
+      `Use ${entry.name} as part of a farming plan when ${entry.growsInto} supports your active recipes, drinks, or reserves.`,
+      "Crops are strongest when the harvest has a destination before planting; avoid growing wide variety that does not feed the menu.",
+    ];
+  }
+  if (entry.kind === "fish") {
+    return [
+      `Use ${entry.name} when fishing fits the day and the catch can become food stock instead of sitting unused in storage.`,
+      "Fish works best as menu support when you can catch it consistently enough to supply the recipes you plan to serve.",
+    ];
+  }
+  return [
+    `Use ${entry.name} when it removes a repeated production bottleneck in your tavern routine.`,
+    "A station is strongest when ingredients, storage, and service demand are ready for the new chain it enables.",
+  ];
 }

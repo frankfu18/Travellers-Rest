@@ -5,6 +5,7 @@ import { fish } from "../data/fish";
 import { guides } from "../data/guides";
 import { ingredients } from "../data/ingredients";
 import { recipes } from "../data/recipes";
+import { tools } from "../data/tools";
 import type { DataStatus } from "../types/content";
 
 export type SearchItemType = "guide" | "recipe" | "drink" | "ingredient" | "crop" | "fish" | "station" | "tool";
@@ -49,36 +50,6 @@ const typePriority: Record<SearchItemType, number> = {
   station: 6,
   tool: 7,
 };
-
-const toolItems: SearchItem[] = [
-  {
-    title: "Profit Calculator",
-    slug: "profit-calculator",
-    href: "/tools/profit-calculator",
-    type: "tool",
-    category: "Tools",
-    description: "Estimate profit and profit margin from manual sell price and ingredient cost inputs.",
-    keywords: ["profit calculator", "make money", "profit margin", "tools"],
-  },
-  {
-    title: "Brewing Guide",
-    slug: "brewing-guide",
-    href: "/tools/brewing-guide",
-    type: "tool",
-    category: "Tools",
-    description: "Plan brewing steps, drink categories, related drinks, and brewing station decisions.",
-    keywords: ["brewing", "beer", "drinks", "brewing guide"],
-  },
-  {
-    title: "Aging Guide",
-    slug: "aging-guide",
-    href: "/tools/aging-guide",
-    type: "tool",
-    category: "Tools",
-    description: "Understand aging decisions for drinks and related tavern products.",
-    keywords: ["aging", "aged drinks", "aging guide", "tools"],
-  },
-];
 
 export const searchIndex: SearchItem[] = [
   ...guides.map((guide) => ({
@@ -150,7 +121,16 @@ export const searchIndex: SearchItem[] = [
     keywords: station.keywords,
     dataStatus: station.dataStatus,
   })),
-  ...toolItems,
+  ...tools.map((tool) => ({
+    title: tool.title,
+    slug: tool.slug,
+    href: tool.href,
+    type: "tool" as const,
+    category: tool.category,
+    description: tool.description,
+    keywords: tool.keywords,
+    dataStatus: tool.dataStatus,
+  })),
 ];
 
 export function searchItems(query: string): SearchResult[] {

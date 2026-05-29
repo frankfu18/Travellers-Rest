@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { tools } from "@/data/tools";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
@@ -9,12 +10,6 @@ export const metadata: Metadata = createMetadata({
   path: "/tools",
   keywords: ["Travellers Rest tools", "profit calculator", "brewing guide"],
 });
-
-const tools = [
-  { title: "Profit Calculator", href: "/tools/profit-calculator", description: "Estimate profit and profit margin from manual price and cost inputs." },
-  { title: "Brewing Guide", href: "/tools/brewing-guide", description: "Plan brewing steps, drink categories, and related drink pages." },
-  { title: "Aging Guide", href: "/tools/aging-guide", description: "Understand how aging can affect food and drink planning." },
-];
 
 export default function ToolsPage() {
   return (

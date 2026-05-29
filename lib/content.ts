@@ -50,7 +50,6 @@ export function formatDataStatus(status: DatabaseEntry["dataStatus"]): string {
     verified: "Verified",
     completed: "Completed",
     needs_verification: "Needs verification",
-    estimated: "Estimated",
   };
 
   return labels[status];

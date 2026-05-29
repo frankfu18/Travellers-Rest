@@ -59,10 +59,10 @@ export default async function GuidePage({ params }: PageProps) {
   const toc = [
     ...guide.sections.map((section) => ({ id: section.id, title: section.title })),
     { id: "practical-checklist", title: "Practical Checklist" },
-    { id: "beginner-mistakes", title: "Beginner Mistakes" },
+    { id: "common-mistakes", title: "Common Mistakes" },
     { id: "faq-heading", title: "FAQ" },
-    { id: "recommended-next", title: "Recommended Next" },
     { id: "related-database-pages", title: "Related Database Pages" },
+    { id: "recommended-next", title: "Recommended Next" },
     { id: "guide-info", title: "Info" },
   ];
 
@@ -140,8 +140,8 @@ export default async function GuidePage({ params }: PageProps) {
           </ul>
         </section>
 
-        <section id="beginner-mistakes" className="mt-10">
-          <h2 className="text-2xl font-bold text-amber-50">Beginner Mistakes</h2>
+        <section id="common-mistakes" className="mt-10">
+          <h2 className="text-2xl font-bold text-amber-50">Common Mistakes</h2>
           <ul className="mt-4 space-y-3 text-stone-300">
             {mistakes.map((mistake) => (
               <li key={mistake} className="rounded border border-amber-200/15 bg-[#120c08]/70 p-4">
@@ -155,20 +155,6 @@ export default async function GuidePage({ params }: PageProps) {
           <Faq items={guide.faq} />
         </div>
 
-        <section className="mt-10" aria-labelledby="recommended-next">
-          <h2 id="recommended-next" className="text-2xl font-bold text-amber-50">
-            Recommended Next Guides
-          </h2>
-          <p className="mt-3 text-stone-300">
-            Continue with the next guide that improves the same tavern loop, so each change supports stock, service, income, or reputation.
-          </p>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {relatedGuides.map((item) => (
-              <ContentCard key={item.href} item={item} />
-            ))}
-          </div>
-        </section>
-
         <section className="mt-10" aria-labelledby="related-database-pages">
           <h2 id="related-database-pages" className="text-2xl font-bold text-amber-50">
             Related Database Pages
@@ -178,6 +164,20 @@ export default async function GuidePage({ params }: PageProps) {
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {databaseLinks.map((item) => (
+              <ContentCard key={item.href} item={item} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10" aria-labelledby="recommended-next">
+          <h2 id="recommended-next" className="text-2xl font-bold text-amber-50">
+            Recommended Next Guides
+          </h2>
+          <p className="mt-3 text-stone-300">
+            Continue with the next guide that improves the same tavern loop, so each change supports stock, service, income, or reputation.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {relatedGuides.map((item) => (
               <ContentCard key={item.href} item={item} />
             ))}
           </div>

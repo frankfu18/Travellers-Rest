@@ -1,6 +1,6 @@
 export type ContentKind = "recipe" | "ingredient" | "drink" | "crop" | "fish" | "station" | "guide";
 
-export type DataStatus = "verified" | "completed" | "needs_verification" | "estimated";
+export type DataStatus = "verified" | "completed" | "needs_verification";
 
 export type DataQuality = {
   dataStatus: DataStatus;
@@ -87,6 +87,15 @@ export type CraftingStation = DatabaseEntryBase & {
 };
 
 export type DatabaseEntry = Recipe | Ingredient | Drink | Crop | Fish | CraftingStation;
+
+export type ToolEntry = DataQuality & {
+  slug: string;
+  title: string;
+  href: string;
+  description: string;
+  category: "Tools";
+  keywords: string[];
+};
 
 export type Guide = {
   id: string;
