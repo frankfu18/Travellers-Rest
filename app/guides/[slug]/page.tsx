@@ -7,8 +7,8 @@ import { Faq } from "@/components/faq";
 import { InfoTable } from "@/components/info-table";
 import { JsonLd } from "@/components/json-ld";
 import { TableOfContents } from "@/components/table-of-contents";
-import { guides } from "@/data/guides";
-import { getGuide, getGuideChecklist, getGuideDatabaseLinks, getGuideInlineLinks, getGuideMistakes, getRelatedGuides } from "@/lib/content";
+import { guides } from "@/data/all-guides";
+import { getGuide, getGuideChecklist, getGuideDatabaseLinks, getGuideInlineLinks, getGuideMistakes, getGuideToolLinks, getRelatedGuides } from "@/lib/content";
 import { articleSchema, breadcrumbSchema, createMetadata, faqSchema } from "@/lib/seo";
 
 type PageProps = {
@@ -56,11 +56,13 @@ export default async function GuidePage({ params }: PageProps) {
   const checklist = getGuideChecklist(guide.slug);
   const inlineLinks = getGuideInlineLinks(guide.slug);
   const mistakes = getGuideMistakes(guide.slug);
+  const toolLinks = getGuideToolLinks(guide.slug);
   const toc = [
     ...guide.sections.map((section) => ({ id: section.id, title: section.title })),
     { id: "practical-checklist", title: "Practical Checklist" },
     { id: "common-mistakes", title: "Common Mistakes" },
     { id: "faq-heading", title: "FAQ" },
+    { id: "related-tools", title: "Related Tools" },
     { id: "related-database-pages", title: "Related Database Pages" },
     { id: "recommended-next", title: "Recommended Next" },
     { id: "guide-info", title: "Info" },
@@ -154,6 +156,20 @@ export default async function GuidePage({ params }: PageProps) {
         <div className="mt-10">
           <Faq items={guide.faq} />
         </div>
+
+        <section className="mt-10" aria-labelledby="related-tools">
+          <h2 id="related-tools" className="text-2xl font-bold text-amber-50">
+            Related Tools
+          </h2>
+          <p className="mt-3 text-stone-300">
+            Use these planning pages when you need to turn the guide into a concrete next action, menu route, or stage priority.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {toolLinks.map((item) => (
+              <ContentCard key={item.href} item={item} />
+            ))}
+          </div>
+        </section>
 
         <section className="mt-10" aria-labelledby="related-database-pages">
           <h2 id="related-database-pages" className="text-2xl font-bold text-amber-50">

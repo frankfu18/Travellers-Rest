@@ -23,6 +23,7 @@ export function DatabaseDetailPage({ entry, sectionName, sectionHref }: Database
   const isPublicSitemapEntry = entry.dataStatus === "verified" || entry.dataStatus === "completed";
   const toc = [
     { id: "quick-facts", title: "Quick Facts" },
+    { id: "strategy-use", title: "Strategy Use" },
     { id: "how-to-get", title: getHowToTitle(entry) },
     { id: "used-in", title: getUsedInTitle(entry) },
     { id: "how-to-use", title: "How to Use This Item" },
@@ -64,6 +65,28 @@ export function DatabaseDetailPage({ entry, sectionName, sectionHref }: Database
               This entry is still being checked and is not included in the public sitemap yet.
             </div>
           ) : null}
+
+          <section id="strategy-use" className="mt-10">
+            <h2 className="text-2xl font-bold text-amber-50">Strategy Use</h2>
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              {getStrategyRows(entry).map((row) => (
+                <div key={row.label} className="rounded border border-amber-200/15 bg-[#120c08]/70 p-4">
+                  <h3 className="font-bold text-amber-100">{row.label}</h3>
+                  <p className="mt-2 text-sm text-stone-300">{row.value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 rounded border border-amber-200/15 bg-[#1a100b] p-4">
+              <h3 className="font-bold text-amber-50">Related Planner Suggestions</h3>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {getPlannerLinks(entry).map((item) => (
+                  <Link key={item.href} href={item.href} className="rounded border border-amber-200/20 bg-amber-200/10 px-3 py-2 text-sm font-bold text-amber-100 hover:border-amber-200/50">
+                    {item.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <section id="how-to-get" className="mt-10">
             <h2 className="text-2xl font-bold text-amber-50">{getHowToTitle(entry)}</h2>
@@ -193,6 +216,79 @@ function getQuickFacts(entry: DatabaseEntry): Array<{ label: string; value: Reac
   }
 
   return rows;
+}
+
+function getStrategyRows(entry: DatabaseEntry): Array<{ label: string; value: string }> {
+  return [
+    { label: "Best used for", value: getBestUsedFor(entry) },
+    { label: "Good for beginners?", value: getBeginnerFit(entry) },
+    { label: "Stockpile priority", value: getStockpilePriority(entry) },
+    { label: "Works well with", value: getWorksWellWith(entry) },
+    { label: "Avoid using when", value: getAvoidUsingWhen(entry) },
+  ];
+}
+
+function getBestUsedFor(entry: DatabaseEntry): string {
+  if (entry.kind === "recipe") return `${entry.name} works best when its ingredient groups are already part of your active food plan and the ${entry.station} is not your current bottleneck.`;
+  if (entry.kind === "drink") return `${entry.name} works best as part of a planned drink chain with protected inputs and service-ready storage.`;
+  if (entry.kind === "ingredient") return `${entry.name} is best used when you assign it to a clear role: core food, drink input, reserve, trend buffer, or experiment stock.`;
+  if (entry.kind === "crop") return `${entry.name} is best used when ${entry.growsInto} supports the recipes, drinks, or reserves you actually plan to serve.`;
+  if (entry.kind === "fish") return `${entry.name} is best used when fishing is already part of the day and the catch can become prepared food instead of idle storage.`;
+  return `${entry.name} is best used when it removes a named production, service, storage, or menu bottleneck.`;
+}
+
+function getBeginnerFit(entry: DatabaseEntry): string {
+  if (entry.kind === "recipe") return entry.ingredientGroups.length <= 2 ? "Usually beginner-friendly if the ingredients are easy to replace." : "Better after your ingredient supply and station flow are stable.";
+  if (entry.kind === "drink") return "Beginner-friendly only when it can be your reliable baseline drink or a simple second drink.";
+  if (entry.kind === "ingredient") return entry.sourceType === "crop" || entry.sourceType === "fish" ? "Good for beginners when the source is already part of your daily routine." : "Use carefully until the source and competing uses are verified in game.";
+  if (entry.kind === "crop") return "Good for beginners when the harvest feeds your current menu instead of random storage.";
+  if (entry.kind === "fish") return "Good for beginners if you fish consistently and keep a non-fish backup food.";
+  return "Good for beginners when the station solves a problem you already have, not when it adds a new chain too early.";
+}
+
+function getStockpilePriority(entry: DatabaseEntry): string {
+  if (entry.kind === "recipe") return "Stockpile its ingredient groups only if this recipe is part of the core menu.";
+  if (entry.kind === "drink") return "Protect its drink inputs before cooking experiments, especially if it is your baseline tap option.";
+  if (entry.kind === "ingredient") return entry.dataStatus === "needs_verification" ? "Needs verification; prioritize by your observed shortages before using strict counts." : "Prioritize if it supports multiple active food or drink chains.";
+  if (entry.kind === "crop") return "Stockpile the harvest when it supports core recipes, drink inputs, or a trend buffer.";
+  if (entry.kind === "fish") return "Stockpile lightly unless catches are consistent; prepared food is usually easier to evaluate than idle fish.";
+  return "Stockpile supporting materials only when the station is part of your next production upgrade.";
+}
+
+function getWorksWellWith(entry: DatabaseEntry): string {
+  if (entry.kind === "recipe") return `${entry.ingredientGroups.join(", ")} planning, the ${entry.station}, and the Menu Planner.`;
+  if (entry.kind === "drink") return `${entry.ingredientGroups.join(", ")} reserves, keg flow, brewing planning, and the Menu Planner.`;
+  if (entry.kind === "ingredient") return "Recipes, drinks, crops, or fish routes that use the same ingredient group without draining the core menu.";
+  if (entry.kind === "crop") return `${entry.growsInto}, recipe planning, stockpile planning, and trend preparation.`;
+  if (entry.kind === "fish") return "Fish-based recipes, flexible food planning, and days where fishing does not steal tavern prep time.";
+  return `${entry.usedFor.join(", ")}, progression planning, and bottleneck-focused upgrades.`;
+}
+
+function getAvoidUsingWhen(entry: DatabaseEntry): string {
+  if (entry.kind === "recipe") return "Avoid making it a core menu item when its inputs are rare, shared with brewing, or not replaceable tomorrow.";
+  if (entry.kind === "drink") return "Avoid relying on it when its inputs are thin or when station timing means it will not be ready before service.";
+  if (entry.kind === "ingredient") return "Avoid spending it casually when another core recipe, drink, or trend buffer depends on the same stock.";
+  if (entry.kind === "crop") return "Avoid planting around it when you cannot name the food, drink, or reserve role for the harvest.";
+  if (entry.kind === "fish") return "Avoid building the whole menu around it when catches are inconsistent or the tavern still needs prep time.";
+  return "Avoid prioritizing it when it creates a new production chain before ingredients, storage, and service flow are ready.";
+}
+
+function getPlannerLinks(entry: DatabaseEntry): Array<{ title: string; href: string }> {
+  const links = [
+    { title: "Menu Planner", href: "/menu-planner" },
+    { title: "What to Do Next", href: "/what-to-do-next" },
+  ];
+
+  if (entry.kind === "recipe" || entry.kind === "ingredient" || entry.kind === "crop" || entry.kind === "fish") {
+    links.push({ title: "Best Early Recipes", href: "/guides/best-early-game-recipes" });
+  }
+
+  if (entry.kind === "drink" || (entry.kind === "ingredient" && ["Brewing", "Grain", "Fruit", "Sweetener", "Processing"].includes(entry.category))) {
+    links.push({ title: "Best Drinks on Tap", href: "/guides/best-drinks-to-keep-on-tap" });
+  }
+
+  links.push({ title: "Inventory Management", href: "/guides/tavern-inventory-management" });
+  return links.slice(0, 4);
 }
 
 function getHowToTitle(entry: DatabaseEntry): string {

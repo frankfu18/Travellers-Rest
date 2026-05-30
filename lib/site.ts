@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Travellers Rest Guide",
+  name: "Travellers Rest Tavern Planner",
   url: "https://travellers-rest.vercel.app",
   description:
-    "A fast Travellers Rest wiki and guide database for recipes, ingredients, drinks, crops, fishing, mining, crafting, NPCs, and tavern management.",
+    "A Travellers Rest tavern planner and strategy guide for choosing what to cook, managing ingredients, preparing for trends, and deciding what to do next.",
 };

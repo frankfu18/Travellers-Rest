@@ -5,8 +5,8 @@ export const categories: Category[] = [
     slug: "guides",
     href: "/guides",
     name: "Guides",
-    title: "Travellers Rest Guides",
-    description: "Beginner guides, tavern management walkthroughs, update notes, and practical tips for Travellers Rest.",
+    title: "Travellers Rest Strategy Guides",
+    description: "Decision-first guides for menu planning, ingredients, staff, reputation, trends, and tavern management.",
     keywords: ["Travellers Rest guides", "beginner guide", "tips"],
   },
   {
@@ -14,7 +14,7 @@ export const categories: Category[] = [
     href: "/recipes",
     name: "Recipes",
     title: "Travellers Rest Recipes",
-    description: "Browse Travellers Rest recipes with ingredients, stations, unlock levels, and sell price notes.",
+    description: "Browse Travellers Rest recipes as menu-planning options with ingredients, stations, and strategy notes.",
     keywords: ["Travellers Rest recipes", "cooking recipes"],
   },
   {
@@ -22,7 +22,7 @@ export const categories: Category[] = [
     href: "/ingredients",
     name: "Ingredients",
     title: "Travellers Rest Ingredients",
-    description: "A searchable-style ingredient database for crops, animal goods, fish, and cooking materials.",
+    description: "Ingredient planning pages for crops, animal goods, fish, brewing inputs, reserves, and menu decisions.",
     keywords: ["Travellers Rest ingredients", "materials"],
   },
   {
@@ -30,7 +30,7 @@ export const categories: Category[] = [
     href: "/drinks",
     name: "Drinks",
     title: "Travellers Rest Drinks",
-    description: "Beer, wine, spirits, aging notes, brewing stations, and drink value references.",
+    description: "Drink planning pages for baseline taps, brewing inputs, aging decisions, and tavern service flow.",
     keywords: ["Travellers Rest drinks", "brewing", "beer"],
   },
   {
@@ -38,7 +38,7 @@ export const categories: Category[] = [
     href: "/crops",
     name: "Crops",
     title: "Travellers Rest Crops",
-    description: "Crop growing notes, ingredient uses, seasons, and farming planning for tavern production.",
+    description: "Crop pages that connect farming decisions to recipes, drinks, stockpiles, and trend preparation.",
     keywords: ["Travellers Rest crops", "farming"],
   },
   {
@@ -46,7 +46,7 @@ export const categories: Category[] = [
     href: "/fish",
     name: "Fish",
     title: "Travellers Rest Fish",
-    description: "Fish locations, recipe uses, bait notes, and early-game fishing tips.",
+    description: "Fish pages that connect catches to menu planning, food backups, and fishing strategy.",
     keywords: ["Travellers Rest fishing", "fish"],
   },
   {
@@ -70,7 +70,7 @@ export const categories: Category[] = [
     href: "/crafting",
     name: "Crafting",
     title: "Travellers Rest Crafting",
-    description: "Crafting stations, production chains, decorations, and workshop planning.",
+    description: "Station pages for choosing production upgrades that solve cooking, brewing, storage, or service bottlenecks.",
     keywords: ["Travellers Rest crafting", "stations"],
   },
   {

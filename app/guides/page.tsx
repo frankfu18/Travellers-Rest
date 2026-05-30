@@ -16,6 +16,16 @@ export const metadata: Metadata = createMetadata({
 
 const guideGroups = [
   {
+    title: "Decision Tools",
+    description: "Start with the player question before checking databases or long guides.",
+    slugs: ["best-early-game-recipes", "best-ingredients-to-stockpile", "best-drinks-to-keep-on-tap", "how-to-prepare-for-trends"],
+  },
+  {
+    title: "Tavern Operations",
+    description: "Fix staff, reputation, storage, and beginner bottlenecks with practical checklists.",
+    slugs: ["staff-hiring-order", "how-to-increase-reputation", "tavern-inventory-management", "beginner-mistakes"],
+  },
+  {
     title: "Beginner",
     description: "Start here if you are still building a stable tavern routine.",
     slugs: ["beginner-tavern-guide", "what-to-do-first-week"],

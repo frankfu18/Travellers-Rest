@@ -2,7 +2,7 @@ import { craftingStations } from "../data/crafting-stations";
 import { crops } from "../data/crops";
 import { drinks } from "../data/drinks";
 import { fish } from "../data/fish";
-import { guides } from "../data/guides";
+import { guides } from "../data/all-guides";
 import { ingredients } from "../data/ingredients";
 import { recipes } from "../data/recipes";
 import { tools } from "../data/tools";

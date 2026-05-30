@@ -3,7 +3,7 @@ import { craftingStations } from "@/data/crafting-stations";
 import { crops } from "@/data/crops";
 import { drinks } from "@/data/drinks";
 import { fish } from "@/data/fish";
-import { guides } from "@/data/guides";
+import { guides } from "@/data/all-guides";
 import { ingredients } from "@/data/ingredients";
 import { recipes } from "@/data/recipes";
 import type { CardItem, Category, CraftingStation, Crop, DatabaseEntry, Drink, Fish, Guide, Ingredient, Recipe } from "@/types/content";
@@ -169,6 +169,12 @@ export function getGuideNavigation(slug: string): {
 
 export function getGuideDatabaseLinks(slug: string): CardItem[] {
   const bySlug: Record<string, string[]> = {
+    "best-ingredients-to-stockpile": ["/ingredients", "/crops", "/drinks", "/recipes"],
+    "best-drinks-to-keep-on-tap": ["/drinks", "/ingredients/barley", "/ingredients/hops", "/crafting/keg"],
+    "how-to-prepare-for-trends": ["/recipes", "/drinks", "/ingredients", "/crops"],
+    "staff-hiring-order": ["/crafting", "/recipes", "/drinks", "/ingredients"],
+    "tavern-inventory-management": ["/ingredients", "/recipes", "/drinks", "/crops"],
+    "beginner-mistakes": ["/recipes", "/drinks", "/ingredients", "/crafting"],
     "beginner-tavern-guide": ["/recipes", "/drinks", "/ingredients/barley", "/crops/carrot"],
     "how-to-make-money-early-game": ["/tools/profit-calculator", "/recipes/roast-fish", "/recipes/vegetable-stew", "/drinks/light-beer"],
     "how-to-increase-reputation": ["/recipes", "/drinks", "/crafting/kitchen", "/ingredients"],
@@ -229,6 +235,24 @@ export function getGuideDatabaseLinks(slug: string): CardItem[] {
       description: "Estimate profit and margin from an item's sell price and ingredient cost.",
       meta: "Tool",
     },
+    "/what-to-do-next": {
+      title: "What to Do Next",
+      href: "/what-to-do-next",
+      description: "Choose your stage and bottleneck to get next actions.",
+      meta: "Decision Tool",
+    },
+    "/menu-planner": {
+      title: "Menu Planner",
+      href: "/menu-planner",
+      description: "Plan food, drinks, stockpiles, and menu variety by stage and goal.",
+      meta: "Planning Tool",
+    },
+    "/progression": {
+      title: "Progression Guide",
+      href: "/progression",
+      description: "Follow stage-based priorities from day 1 to late-game optimization.",
+      meta: "Stage Guide",
+    },
     "/guides/beginner-tavern-guide": guideToCard(getGuide("beginner-tavern-guide")!),
     "/guides/how-to-make-money-early-game": guideToCard(getGuide("how-to-make-money-early-game")!),
     "/guides/how-to-get-more-customers": guideToCard(getGuide("how-to-get-more-customers")!),
@@ -253,8 +277,86 @@ export function getGuideDatabaseLinks(slug: string): CardItem[] {
     .filter((item): item is CardItem => Boolean(item));
 }
 
+export function getGuideToolLinks(slug: string): CardItem[] {
+  const toolsBySlug: Record<string, CardItem[]> = {
+    "best-early-game-recipes": [
+      { title: "Menu Planner", href: "/menu-planner", description: "Turn available categories into a practical food and drink plan.", meta: "Tool" },
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Use if recipe choice is part of a bigger bottleneck.", meta: "Tool" },
+    ],
+    "best-ingredients-to-stockpile": [
+      { title: "Menu Planner", href: "/menu-planner", description: "Decide which ingredient groups deserve reserve space.", meta: "Tool" },
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Use when shortages point to a broader tavern problem.", meta: "Tool" },
+    ],
+    "best-drinks-to-keep-on-tap": [
+      { title: "Menu Planner", href: "/menu-planner", description: "Balance drink planning against food categories and unlocked stations.", meta: "Tool" },
+      { title: "Progression Guide", href: "/progression", description: "Find when brewing should become a main production focus.", meta: "Tool" },
+    ],
+    "how-to-prepare-for-trends": [
+      { title: "Menu Planner", href: "/menu-planner", description: "Reserve flexible ingredient groups without breaking the core menu.", meta: "Tool" },
+      { title: "Progression Guide", href: "/progression", description: "Place trend prep inside the current growth stage.", meta: "Tool" },
+    ],
+    "staff-hiring-order": [
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Choose staff only after naming the service bottleneck.", meta: "Tool" },
+      { title: "Progression Guide", href: "/progression", description: "Connect staff unlocks to reputation and mid-game scaling.", meta: "Tool" },
+    ],
+    "how-to-increase-reputation": [
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Diagnose whether reputation is blocked by stock, layout, staff, or demand.", meta: "Tool" },
+      { title: "Menu Planner", href: "/menu-planner", description: "Keep food and drink choices reliable enough for better service.", meta: "Tool" },
+    ],
+    "tavern-inventory-management": [
+      { title: "Menu Planner", href: "/menu-planner", description: "Turn storage roles into food, drink, and stockpile priorities.", meta: "Tool" },
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Use shortages to choose the next bottleneck to fix.", meta: "Tool" },
+    ],
+    "beginner-mistakes": [
+      { title: "What to Do Next", href: "/what-to-do-next", description: "Pick one next action instead of overexpanding.", meta: "Tool" },
+      { title: "Progression Guide", href: "/progression", description: "Use stage priorities to avoid taking systems too early.", meta: "Tool" },
+    ],
+  };
+
+  return toolsBySlug[slug] ?? [
+    { title: "What to Do Next", href: "/what-to-do-next", description: "Diagnose the current bottleneck and choose a next action.", meta: "Tool" },
+    { title: "Menu Planner", href: "/menu-planner", description: "Plan food, drinks, stockpiles, and flexible ingredients.", meta: "Tool" },
+  ];
+}
+
 export function getGuideInlineLinks(slug: string): CardItem[] {
   const links: Record<string, CardItem[]> = {
+    "best-ingredients-to-stockpile": [
+      { title: "menu planner", href: "/menu-planner", description: "turn ingredient groups into food and drink priorities" },
+      { title: "inventory guide", href: "/guides/tavern-inventory-management", description: "assign storage roles before service" },
+      { title: "ingredients database", href: "/ingredients", description: "check sources and related recipes" },
+      { title: "trend guide", href: "/guides/how-to-prepare-for-trends", description: "keep flexible category buffers" },
+    ],
+    "best-drinks-to-keep-on-tap": [
+      { title: "menu planner", href: "/menu-planner", description: "balance drinks against food and station unlocks" },
+      { title: "drinks database", href: "/drinks", description: "browse drink categories and ingredient groups" },
+      { title: "brewing guide", href: "/guides/brewing-basics", description: "stabilize one baseline drink first" },
+      { title: "ingredients database", href: "/ingredients", description: "protect brewing inputs" },
+    ],
+    "how-to-prepare-for-trends": [
+      { title: "menu planner", href: "/menu-planner", description: "plan flexible reserves without breaking the core menu" },
+      { title: "stockpile guide", href: "/guides/best-ingredients-to-stockpile", description: "choose which ingredient groups to protect" },
+      { title: "recipes database", href: "/recipes", description: "find candidate food categories" },
+      { title: "drinks database", href: "/drinks", description: "find candidate drink categories" },
+    ],
+    "staff-hiring-order": [
+      { title: "what to do next", href: "/what-to-do-next", description: "confirm staff is solving the current bottleneck" },
+      { title: "reputation guide", href: "/guides/how-to-increase-reputation", description: "connect staff coverage to service quality" },
+      { title: "progression guide", href: "/progression", description: "place staff in the right growth stage" },
+      { title: "inventory guide", href: "/guides/tavern-inventory-management", description: "make sure staff are serving a stocked tavern" },
+    ],
+    "tavern-inventory-management": [
+      { title: "menu planner", href: "/menu-planner", description: "turn storage roles into menu choices" },
+      { title: "stockpile guide", href: "/guides/best-ingredients-to-stockpile", description: "reserve ingredients with a purpose" },
+      { title: "ingredients database", href: "/ingredients", description: "trace shared inputs" },
+      { title: "what to do next", href: "/what-to-do-next", description: "use shortages to choose the next action" },
+    ],
+    "beginner-mistakes": [
+      { title: "what to do next", href: "/what-to-do-next", description: "choose one bottleneck instead of overexpanding" },
+      { title: "progression guide", href: "/progression", description: "follow stage priorities" },
+      { title: "menu planner", href: "/menu-planner", description: "keep the early menu small and repeatable" },
+      { title: "best early recipes", href: "/guides/best-early-game-recipes", description: "choose food by replaceable ingredients" },
+    ],
     "beginner-tavern-guide": [
       { title: "early money guide", href: "/guides/how-to-make-money-early-game", description: "turn the same stable routine into coins" },
       { title: "reputation guide", href: "/guides/how-to-increase-reputation", description: "connect clean service and stock reliability to tavern growth" },
@@ -350,6 +452,13 @@ export function getGuideInlineLinks(slug: string): CardItem[] {
 }
 
 export function getGuideChecklist(slug: string): string[] {
+  const guide = getGuide(slug);
+  const strategyChecklist = guide?.sections.find((section) => section.id === "checklist");
+
+  if (strategyChecklist) {
+    return strategyChecklist.body;
+  }
+
   const checklists: Record<string, string[]> = {
     "beginner-tavern-guide": [
       "Before opening, confirm there is at least one dependable food plan and one dependable drink plan ready for service.",
@@ -461,6 +570,13 @@ export function getGuideChecklist(slug: string): string[] {
 }
 
 export function getGuideMistakes(slug: string): string[] {
+  const guide = getGuide(slug);
+  const avoidSection = guide?.sections.find((section) => section.id === "what-to-avoid");
+
+  if (avoidSection) {
+    return avoidSection.body;
+  }
+
   const mistakes: Record<string, string[]> = {
     "beginner-tavern-guide": [
       "Opening before food, drinks, and cleaning are ready, then spending the whole service reacting to shortages.",
