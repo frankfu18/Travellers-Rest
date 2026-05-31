@@ -1,5 +1,38 @@
 # Codex Task Log
 
+## 2026-05-31 - Remove Mechanical Source Labels
+
+### Goal
+
+Remove visible source-label phrasing such as explicit language/community labels from `/what-to-do-next` so the copy reads like authored strategy guidance rather than an AI-scanned summary.
+
+### Files changed
+
+- `app/what-to-do-next/page.tsx`
+- `components/what-to-do-next-client.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated copy on the existing `/what-to-do-next` page.
+
+### SEO changes
+
+- Simplified `/what-to-do-next` metadata description and keywords to remove mechanical language-source phrasing.
+
+### Data changes
+
+- Reworded action copy and source notes to use natural phrases such as beginner routes, progression notes, recipe-selection rules, player discussions, guide pages, and planning patterns.
+- Removed explicit language-source labels from the visible page and recommendation copy.
+
+### Verification needed
+
+- Continue checking future edits for phrases that sound like source scanning rather than practical strategy writing.
+
+### Next recommended task
+
+Review other strategy pages for the same issue and replace mechanical source-label phrasing with direct player-facing guidance.
+
 ## 2026-05-31 - Long-Form Action Paragraphs
 
 ### Goal
