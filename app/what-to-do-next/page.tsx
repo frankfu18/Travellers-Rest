@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata: Metadata = createMetadata({
   title: "What to Do Next in Travellers Rest - Player-Sourced Tavern Strategy Planner",
   description:
-    "A community-informed Travellers Rest planner that helps you decide what to do next based on your current bottleneck: money, food, ingredients, staff, reputation, brewing, or guest rooms.",
+    "A community-informed Travellers Rest planner that helps you decide what to do next based on your current stage and main bottleneck: money, cooking, ingredients, staff, reputation, service pressure, or guest rooms.",
   path: "/what-to-do-next",
   keywords: [
     "Travellers Rest what to do next",

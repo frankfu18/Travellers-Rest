@@ -1,5 +1,40 @@
 # Codex Task Log
 
+## 2026-05-31 - Stage and Problem Recommendation Matrix
+
+### Goal
+
+Refactor `/what-to-do-next` so recommendations are selected from the exact `Current stage + Main problem` combination instead of being dominated by the stage module.
+
+### Files changed
+
+- `components/what-to-do-next-client.tsx`
+- `app/what-to-do-next/page.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated the existing `/what-to-do-next` page.
+
+### SEO changes
+
+- Updated `/what-to-do-next` metadata description to emphasize current stage plus main bottleneck.
+
+### Data changes
+
+- Removed the `Available systems` selector, related state, and related recommendation logic.
+- Added a local two-dimensional recommendation structure keyed by stage and problem.
+- Added independent community-informed content for the required combinations, plus a dynamic fallback that combines the selected stage context with the selected problem context.
+
+### Verification needed
+
+- Manually review the player-sourced wording after future Travellers Rest updates.
+- Exact item values, wage details, crop balance, room economics, and timing remain unverified and should not be treated as fixed data.
+
+### Next recommended task
+
+Add UI-level smoke tests or lightweight component tests that confirm changing stage and problem changes the recommendation title, summary, actions, avoid list, and explanation.
+
 ## 2026-05-31 - Community-Informed What To Do Next Planner
 
 ### Goal
