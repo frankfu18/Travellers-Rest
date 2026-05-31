@@ -1,5 +1,42 @@
 # Codex Task Log
 
+## 2026-05-31 - English and Japanese Planner Simplification
+
+### Goal
+
+Refactor `/what-to-do-next` into a simpler English + Japanese community-informed strategy planner with only two selectors and one Recommended Actions result area.
+
+### Files changed
+
+- `components/what-to-do-next-client.tsx`
+- `app/what-to-do-next/page.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated the existing `/what-to-do-next` page.
+
+### SEO changes
+
+- Updated `/what-to-do-next` metadata title and description for English and Japanese community-informed strategy positioning.
+- Added natural keyword coverage for what to do next, early game tips, money, food, planting, reputation, staff, rooms, Japanese guide, and beginner guide intent.
+
+### Data changes
+
+- Reduced stages to First Week, Early Game, Mid Game, and Late Game.
+- Reduced problems to seven common player bottlenecks.
+- Removed Available systems state, UI, and recommendation logic.
+- Added 28 independent static stage-and-problem recommendation combinations with five actions each.
+
+### Verification needed
+
+- Manually verify future balance-sensitive claims before adding exact prices, values, levels, timers, or formulas.
+- Review Japanese guide/player-note themes after major Travellers Rest updates so the summaries stay accurate.
+
+### Next recommended task
+
+Add lightweight interaction tests for `/what-to-do-next` to confirm all 28 stage/problem combinations render distinct titles and actions.
+
 ## 2026-05-31 - Stage and Problem Recommendation Matrix
 
 ### Goal
