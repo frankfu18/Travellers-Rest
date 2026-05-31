@@ -66,17 +66,17 @@ const recommendationsByStageAndProblem = {
     "need-money": {
       title: "First Week Money Setup",
       actions: [
-        "Use the first week to gather fruit, wood, stone, coal, and basic materials before long openings; solid beginner routes treat preparation as progress, not wasted time.",
-        "Turn gathered fruit into simple drinks before opening when your setup allows it; many player tips describe prepared drinks as a steadier early coin source than relying only on basic water service.",
+        "Use the first week to gather fruit, wood, stone, coal, and basic materials before long openings; if the next batch cannot start because fuel or materials are missing, opening longer only moves the shortage into service.",
+        "Turn gathered fruit into simple drinks before opening when your setup allows it; if customers empty the bar early, prepare the next drink batch before spending money on more recipes or decoration.",
         "Open for a shorter session, watch whether food, drinks, fuel, or ingredients run out first, and make that shortage the next day's production target.",
-        "Spend early coins on seeds, fuel, tools, stations, or supply needs before decoration; recurring player warnings say cosmetic comfort matters more after the production loop works.",
+        "Spend early coins on seeds, fuel, tools, stations, or supply needs before decoration. If tomorrow's batch cannot start, a nicer room will not fix the income problem.",
         "Progress tutorial tasks while stocking food and materials, because good starter routes pair shop-rating growth with steady resource preparation rather than pure tavern hours.",
       ],
     },
     "what-to-cook": {
       title: "First Week Simple Menu Plan",
       actions: [
-        "Choose one simple recipe from ingredients you already gather or buy reliably; many players value a dish you can restock over a menu that only looks impressive.",
+        "Choose one simple recipe from ingredients you already gather or buy reliably. If the dish cannot be restocked after the next harvest or shop trip, keep it off the regular menu.",
         "Test one recipe at a time and check which ingredient disappears after service, so the menu teaches you demand instead of hiding it behind too many dishes.",
         "Avoid letting one early ingredient feed several dishes at once; stock shortages often start when a single shared input gets spent across the whole menu.",
         "Use a practical recipe-selection rule: choose foods that use easy materials and repeatable production instead of locking the tavern into a fragile route.",
@@ -86,27 +86,27 @@ const recommendationsByStageAndProblem = {
     "run-out-stock": {
       title: "First Week Stock Recovery Plan",
       actions: [
-        "Take a dedicated gathering and prep day if the pantry is thin; players often say weak daily openings are worse than one closed day that rebuilds the loop.",
+        "Take a dedicated gathering and prep day if the pantry is thin. A weak opening that empties every shelf teaches less than one closed day that rebuilds meals, drinks, fuel, and materials.",
         "Build a gather to cook or brew to open rhythm, then repeat it until you can predict what runs out first.",
         "Cut the active menu down to a few reliable items, because first-week stock problems usually come from serving too broadly before storage exists.",
         "Track whether the shortage is food, drink, fuel, or materials; material prep and ingredient prep are separate early tasks, and mixing them together makes the next bottleneck harder to see.",
-        "Keep a small reserve instead of selling everything to zero, since recurring player advice says an empty pantry makes the next day slower and more expensive.",
+        "Keep a small reserve instead of selling everything to zero. If the pantry is empty at bedtime, the next morning starts with emergency gathering instead of planned production.",
       ],
     },
     "what-to-plant": {
       title: "First Week Crop Choice Plan",
       actions: [
-        "Plant for the food and drink you are actually making, not for every crop that is available; players often warn that random fields create random storage.",
+        "Plant for the food and drink you are actually making, not for every crop that is available. Random fields can fill storage while still leaving you missing the crop your menu needs.",
         "Use grains, hops, grapes, tomatoes, and onions as planning examples because they can support food or drink routes, but verify exact uses in your current version.",
         "Consider tomatoes, green peppers, melons, and watermelons as examples of crops that can support useful planning, without treating any one crop as a fixed best answer.",
         "Give recurring crops space when you need stable supply over several openings, because repeated harvests reduce the pressure to replant constantly.",
-        "Save seasonal ingredients before the season changes; community stockpile advice often points to seasonal gaps as the reason a once-stable menu suddenly fails.",
+        "Save seasonal ingredients before the season changes; if a once-stable recipe depends on a crop that disappears from your routine, the menu can fail even when storage still looks full.",
       ],
     },
     "too-busy": {
       title: "First Week Calm Service Plan",
       actions: [
-        "Stop adding tables until cleaning, serving, and stock checks feel manageable; players often warn that busy does not always mean better.",
+        "Stop adding tables until cleaning, serving, and stock checks feel manageable. If the last service left dirty tables and empty drinks, more seats will multiply that pressure.",
         "Shorten opening hours if you spend the entire day reacting, because early service should reveal bottlenecks without destroying the next day's prep.",
         "Move furniture and storage so you do less running during service; layout distance is a common hidden reason beginners feel overwhelmed.",
         "Prepare food and drinks before opening rather than during customer pressure; the tavern is easier to read when service tests your stock instead of your panic crafting.",
@@ -116,7 +116,7 @@ const recommendationsByStageAndProblem = {
     "need-reputation": {
       title: "First Week Reputation Foundation",
       actions: [
-        "Open with enough stock for a clean service day; player advice often values a small menu that does not run out over a wide menu that collapses.",
+        "Open with enough stock for a clean service day. A small menu that survives the evening tells you more than a wide menu that collapses before you can read the problem.",
         "Keep the tavern clean, comfortable, and readable before chasing more tables, because early reputation work depends on basic service quality.",
         "Use decoration carefully after food and drink supply is stable; comfort helps more when customers are not waiting on missing stock.",
         "Prepare materials and ingredients alongside customer service, because shop rating, tutorial flow, and resource readiness usually move forward together.",
@@ -126,7 +126,7 @@ const recommendationsByStageAndProblem = {
     "staff-and-rooms": {
       title: "First Week Expansion Restraint",
       actions: [
-        "Delay guest rooms and major expansion until the basic food and drink loop survives several openings; players usually frame rooms as later workload, not a rescue plan.",
+        "Delay guest rooms and major expansion until the basic food and drink loop survives several openings; if normal service already leaves dirty tables or empty shelves, rooms add another workload before the base loop is ready.",
         "If staff becomes tempting early, compare the wage against the task they remove; staff should buy back useful time, not pretend to be instant profit.",
         "Ask whether stock and service are stable before adding space; expansion makes shortages more visible if the pantry is already weak.",
         "Keep room-related spending behind seeds, materials, and production needs, since early resources usually create more value when they strengthen tomorrow's opening.",
@@ -150,7 +150,7 @@ const recommendationsByStageAndProblem = {
       actions: [
         "Build the menu around stable crops and repeatable ingredients, then add dishes gradually instead of buying a large recipe list at once.",
         "Watch which dish drains ingredients too quickly and either reduce its use or plant around it before making it a core item.",
-        "Keep food from stealing brewing inputs when drinks are carrying income; many players warn that grain, fruit, or sweet ingredients can become cross-system bottlenecks.",
+        "Keep food from stealing brewing inputs when drinks are carrying income. If grain, fruit, or sweet ingredients feed both systems, reserve the drink batch before testing another dish.",
         "Use examples like salad, yogurt, sausage, chorizo, or fruit yogurt as ingredient-logic ideas, not as fixed best-in-slot claims.",
         "Keep one everyday dish and one surplus-use dish so the menu can serve customers while also reducing storage clutter.",
       ],
@@ -161,7 +161,7 @@ const recommendationsByStageAndProblem = {
         "Schedule farming, gathering, or prep days each week if openings keep emptying storage; early stock problems often come from too-wide menus or too-long service.",
         "Separate food, drink, fuel, and material reserves so board orders, cooking, brewing, and tavern service do not quietly compete for the same pile.",
         "Add production capacity when stock fails repeatedly, because more opening hours rarely fix a station or ingredient bottleneck.",
-        "Check drink supply first if customers are served food but income still feels unstable; players often mention drinks becoming the hidden early shortage.",
+        "Check drink supply first if customers are served food but income still feels unstable. If the bar empties before the kitchen, prepare the next drink batch before adding more meals.",
         "Keep order-board goals from consuming the ingredients needed for the next opening; orders should support progression, not steal the next service day.",
       ],
     },
@@ -182,14 +182,14 @@ const recommendationsByStageAndProblem = {
         "Consider the first staff hire only after you identify the biggest pressure point, because early wages should buy back time you actually need.",
         "Tighten layout around storage, bar, tables, and cleaning paths so each service action takes fewer steps.",
         "Give bartender-style help higher priority when drink variety and refills become the pain point, because staff value changes with the pressure you actually feel.",
-        "Shorten service or reduce seats before quality collapses; recurring advice says stable service beats a crowded room you cannot manage.",
+        "Shorten service or reduce seats before quality collapses. A crowded room is not progress if every rush ends with empty shelves, dirty tables, and no time to produce tomorrow's stock.",
       ],
     },
     "need-reputation": {
       title: "Early Game Rating Growth Plan",
       actions: [
         "Raise reputation through comfort, variety, quality, and cleanliness rather than only staying open longer.",
-        "Keep the tavern small enough to serve consistently; players often compare stable small service favorably against chaotic expansion.",
+        "Keep the tavern small enough to serve consistently. If every added table makes you choose between cleaning, refilling drinks, and cooking, remove the pressure before chasing more traffic.",
         "Prepare better food or drink before reputation-focused service days, especially if VIP-style needs or higher-quality expectations are becoming relevant.",
         "Add decoration after production is reliable, since comfort gains are easier to feel when food and drink stock no longer collapses.",
         "Advance tutorial, materials, and ingredient preparation together with shop-rating goals instead of treating reputation as a separate grind.",
@@ -264,7 +264,7 @@ const recommendationsByStageAndProblem = {
         "Use higher-quality drinks and food when supply can support them, because reputation gains feel steadier when premium service does not create shortages.",
         "Balance hall comfort and room comfort if lodging is open, so one reputation path does not weaken the other.",
         "Combine shop-rating goals with board orders and skill-tree progression when they share production needs, instead of planning each system in isolation.",
-        "Keep service consistent before scaling crowds; many players warn that reputation work suffers when the tavern is visually bigger but operationally messier.",
+        "Keep service consistent before scaling crowds. Reputation work suffers when the tavern looks bigger but customers wait longer, tables stay dirty, and premium stock runs out early.",
       ],
     },
     "staff-and-rooms": {
@@ -614,16 +614,16 @@ function expandAction(note: string, stageId: StageId, problemId: ProblemId, inde
   const titles = actionTitlesByProblem[problemId];
   const title = titles[index] ?? `${stage.label} action ${index + 1}`;
   const cleanedNote = note.replace(/; /g, ". ");
-  const sourceLogic =
+  const decisionCheck =
     index % 3 === 0
-      ? "That is the practical reason this pattern keeps showing up in beginner routes and progression notes."
+      ? "The point is to test one bottleneck at a time so tomorrow's plan is based on what actually broke."
       : index % 3 === 1
-        ? "The useful part of the community logic is not the exact item choice, but the habit of checking whether the next opening can repeat the result."
-        : "Use it as a planning rule rather than a fixed build order, because balance and item values can change between updates.";
+        ? "Keep the change only if you can repeat it after the next harvest, shopping trip, gathering route, or production batch."
+        : "Treat it as a decision rule, not a permanent build order, and adjust when your own tavern shows a different pressure point.";
 
   return {
     title,
-    body: `${cleanedNote} In ${stage.label.toLowerCase()}, this matters because ${stage.situation}. Apply it before the next opening, watch whether the same shortage or delay appears again, and use that result to decide whether to continue or pause; ${stage.pacing} ${sourceLogic}`,
+    body: `${cleanedNote} In ${stage.label.toLowerCase()}, this matters because ${stage.situation}. Apply it before the next opening, watch whether the same shortage or delay appears again, and use that result to decide whether to continue or pause; ${stage.pacing} ${decisionCheck}`,
   };
 }
 

@@ -1,5 +1,39 @@
 # Codex Task Log
 
+## 2026-05-31 - Decision-First Action Copy Cleanup
+
+### Goal
+
+Reduce AI-summary-style wording on `/what-to-do-next` by removing visible source-summary phrases and making the copy read more like direct tavern-planning guidance.
+
+### Files changed
+
+- `app/what-to-do-next/page.tsx`
+- `components/what-to-do-next-client.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task refined the existing `/what-to-do-next` page.
+
+### SEO changes
+
+- Updated `/what-to-do-next` metadata to use "Tavern Strategy Planner" and practical next-action wording instead of source-label wording.
+
+### Data changes
+
+- Replaced remaining "player-sourced", "community logic", "beginner routes", and similar source-summary language in visible planner copy.
+- Reworded affected action seeds so they start from concrete service, stock, expansion, or preparation scenarios.
+- Updated the generated action ending to focus on testing one bottleneck, repeating the result, and adjusting to the tavern's actual pressure point.
+
+### Verification needed
+
+- Continue checking future planner copy for source-summary phrases before publishing.
+
+### Next recommended task
+
+Add a small validation script for `/what-to-do-next` to flag banned phrases, missing action titles, and action bodies that are too short.
+
 ## 2026-05-31 - Remove Mechanical Source Labels
 
 ### Goal
