@@ -20,59 +20,206 @@ type Stage = (typeof stages)[number];
 type Problem = (typeof problems)[number];
 type System = (typeof systems)[number];
 
+type ActionModule = {
+  id: string;
+  title: string;
+  label: string;
+  summary: string;
+  items: string[];
+  steps?: string[];
+};
+
 type DecisionResult = {
-  actions: string[];
+  modules: ActionModule[];
   avoid: string[];
   prepare: string[];
   guides: Array<{ title: string; href: string }>;
   database: Array<{ title: string; href: string }>;
 };
 
-const stageAdvice: Record<Stage, string[]> = {
-  "Day 1": [
-    "Keep the day small: prepare one food option, one drink option, and a clean service room before chasing new systems.",
-    "Use the first service as a diagnostic day. Write down the first shortage or chore that interrupts you.",
-  ],
-  "First Week": [
-    "Build a repeatable morning routine: check stock, refill the core menu, clean, then open.",
-    "Spend only on upgrades that fix a problem you have already seen more than once.",
-  ],
-  "Early Game": [
-    "Choose one growth lane for the next few days: money, reputation, brewing, kitchen stability, or ingredient supply.",
-    "Make the core menu reliable before widening the menu or increasing customer pressure.",
-  ],
-  "Reputation 6+": [
-    "Treat staff and capacity as service multipliers, not shortcuts. Hire or expand only after the menu can support more demand.",
-    "Standardize prep before opening so staff support a stable system instead of masking weak stock planning.",
-  ],
-  "Mid Game": [
-    "Separate storage into core ingredients, flexible surplus, brewing inputs, and experiment stock.",
-    "Review production bottlenecks after service and upgrade the chain that repeatedly blocks income or reputation.",
-  ],
-  "Late Game": [
-    "Optimize around predictability: scheduled brewing, planned menu rotation, reserves for trends, and staff coverage.",
-    "Remove weak menu items that consume important ingredients without supporting the current tavern goal.",
-  ],
-};
-
-const problemAdvice: Record<Problem, DecisionResult> = {
-  "I need more money": {
-    actions: [
-      "Serve a smaller menu made from ingredients you can replace consistently.",
-      "Refill the item that sold out first yesterday before testing any new recipe.",
-      "Spend on the bottleneck that limits sales today: stock, station flow, drink supply, or room movement.",
+const actionModules = {
+  firstWeek: {
+    id: "first-week",
+    title: "If You Are Still in the First Week",
+    label: "Early rhythm",
+    summary:
+      "Common player advice is to stop treating every day as a mandatory open day. Early progress often comes from building enough stock that service can run cleanly.",
+    items: [
+      "Do not feel forced to open the tavern every single day.",
+      "Use some early days for gathering, mining, chopping wood, collecting fruit, and building a small stockpile.",
+      "Your first goal is not decoration. Your first goal is a repeatable supply loop.",
     ],
+    steps: [
+      "Gather and produce for one or two days.",
+      "Open the tavern when you have enough food and drinks.",
+      "Watch what runs out first.",
+      "Upgrade the bottleneck before expanding again.",
+    ],
+  },
+  money: {
+    id: "money",
+    title: "If You Need More Money",
+    label: "Income loop",
+    summary:
+      "Recurring community advice usually points toward repeatable production first: make items you can supply again, then spend early money on tools that create more money.",
+    items: [
+      "Focus on repeatable products, not fancy products.",
+      "Turn wild fruit into juice when your setup supports it instead of relying only on plain water.",
+      "Start beer or wine production when the supply chain can support it.",
+      "Invest in production stations, aging barrels, kegs, or tools before cosmetic upgrades.",
+      "Spend money on things that create more money first.",
+    ],
+  },
+  planting: {
+    id: "planting",
+    title: "If You Do Not Know What to Plant",
+    label: "Crop planning",
+    summary:
+      "Many players recommend planting around the menu and brewing plan you actually use, instead of filling fields with unrelated crops.",
+    items: [
+      "Do not plant everything.",
+      "Plant around your current menu and drink production.",
+      "Prioritize crops that support repeated recipes and brewing.",
+      "Consider useful groups such as grains, hops, grapes, tomatoes, onions, and valuable seasonal crops without assuming one fixed meta route.",
+      "Recurring crops are useful because they keep producing over time.",
+      "Stockpile seasonal ingredients before they become unavailable.",
+    ],
+  },
+  busy: {
+    id: "busy",
+    title: "If Your Tavern Feels Too Busy",
+    label: "Service capacity",
+    summary:
+      "A common player pattern is to slow table expansion until food, drinks, cleaning, and movement can keep up with demand.",
+    items: [
+      "Do not add more tables faster than your service capacity.",
+      "Before expanding seats, ask whether you can keep enough food stocked.",
+      "Check whether you can keep enough drink stocked.",
+      "Watch whether dirty tables or cleaning delays are slowing service.",
+      "If you spend all day serving instead of producing, pause expansion and fix the service loop.",
+      "Consider cleaning upgrades, coasters, staff, or reducing expansion speed.",
+    ],
+  },
+  staff: {
+    id: "staff",
+    title: "If You Unlocked Staff",
+    label: "Staff tradeoff",
+    summary:
+      "Staff can be a turning point, but player opinions differ on hiring early. Treat it as a tradeoff between freed time and wage pressure.",
+    items: [
+      "Early staff can free time for farming, brewing, mining, gathering, and planning.",
+      "Early wages can hurt profits if the tavern is still too small or understocked.",
+      "Hire only for the biggest pain point.",
+      "Start with low-cost staff when possible.",
+      "Check traits and wages before committing.",
+      "Disable unnecessary tasks if your current game systems allow it.",
+      "Add more staff only when the tavern size supports it.",
+    ],
+  },
+  fishing: {
+    id: "fishing",
+    title: "If You Unlocked Fishing",
+    label: "Food support",
+    summary:
+      "Treat fishing as a food-support system, not a reason to ignore tavern prep. A fishing day is strongest when the catch has a planned menu role.",
+    items: [
+      "Fish when it solves a food shortage or supports a repeatable recipe.",
+      "Keep a backup food plan if catches do not match what you wanted.",
+      "Do not fish so long that you open with no drinks, cleaning, or cooked stock ready.",
+    ],
+  },
+  brewing: {
+    id: "brewing",
+    title: "If You Unlocked Brewing",
+    label: "Drink baseline",
+    summary:
+      "Common player advice is to make one drink chain reliable before spreading ingredients across too many beers, wines, or specialty drinks.",
+    items: [
+      "Start beer or wine production when crops, ingredients, stations, and storage can support it.",
+      "Protect grains, hops, grapes, fruit, yeast, and other drink inputs from casual cooking use.",
+      "Keep drinks ready before service instead of reacting after the bar runs dry.",
+      "Use aging when appropriate, but keep enough ready stock for normal service.",
+    ],
+  },
+  reputation: {
+    id: "reputation",
+    title: "If You Want More Reputation",
+    label: "Quality day",
+    summary:
+      "Reputation is not only about opening longer. Improve the quality of each service day before simply adding more tables.",
+    items: [
+      "Improve menu variety once the core menu is stable.",
+      "Improve food and drink quality instead of only increasing volume.",
+      "Use aged drinks when your stock can afford the delay.",
+      "Add comfort through furniture, decoration, and lighting without blocking service paths.",
+      "Keep cleanliness under control.",
+      "Use staff perks and VIP preparation when those systems are part of your current route.",
+    ],
+  },
+  guestRooms: {
+    id: "guest-rooms",
+    title: "If You Are Thinking About Guest Rooms",
+    label: "Expansion tradeoff",
+    summary:
+      "Guest rooms are useful, but common advice is to treat them as another workload. They are safer after the core tavern already runs reliably.",
+    items: [
+      "Consider guest rooms when tavern service is stable.",
+      "Make sure food and drink stock is reliable before adding room workload.",
+      "Check whether you can afford room furniture without starving production upgrades.",
+      "Use staff or a steady daily routine to handle the extra work.",
+      "If you still run out of basic stock, stabilize production first.",
+    ],
+  },
+  mistakes: {
+    id: "mistakes",
+    title: "Common Player Mistakes to Avoid",
+    label: "Avoid",
+    summary:
+      "These are recurring failure patterns that make a tavern feel busy without actually becoming stronger.",
+    items: [
+      "Opening every day with too little stock.",
+      "Buying too many recipes before supporting ingredients are ready.",
+      "Planting crops that do not fit the current menu.",
+      "Expanding tables before service and cleaning can handle them.",
+      "Hiring too much staff before profits are stable.",
+      "Spending heavily on decoration before production works.",
+      "Selling valuable drinks too early instead of aging when appropriate.",
+      "Ignoring seasonal ingredients until they are unavailable.",
+    ],
+  },
+  todayRule: {
+    id: "today-rule",
+    title: 'Simple "What Should I Do Today?" Rule',
+    label: "Daily decision",
+    summary: "Ask yourself: What ran out or slowed me down last time I opened?",
+    items: [
+      "Ran out of drinks: brew, press fruit, age drinks, or add barrels.",
+      "Ran out of food: plant menu crops and cook simple repeatable recipes.",
+      "Ran out of ingredients: gather, farm, shop, or simplify the menu.",
+      "Too many customers to handle: reduce table growth, hire staff, or improve cleaning.",
+      "Reputation is slow: improve comfort, variety, quality, and VIP preparation.",
+      "Money is slow: focus on higher-value repeatable food and drinks.",
+      "Production is slow: add stations before adding more menu complexity.",
+    ],
+  },
+} satisfies Record<string, ActionModule>;
+
+const problemAdvice: Record<Problem, Omit<DecisionResult, "modules"> & { moduleIds: Array<keyof typeof actionModules> }> = {
+  "I need more money": {
+    moduleIds: ["money", "brewing"],
     avoid: [
-      "Do not chase one theoretical best item if it breaks tomorrow's supply.",
-      "Do not add seats while food or drinks already run out during normal service.",
+      "Do not spend heavily on decoration before production works.",
+      "Do not chase fancy one-off products if they break tomorrow's supply.",
+      "Do not add more tables if the current tavern already empties your food or drink stock.",
     ],
     prepare: [
-      "Pick one dependable food line and one dependable drink line.",
-      "Keep a small reserve of shared inputs before opening.",
+      "Build one repeatable food line and one repeatable drink line.",
+      "Save early spending for stations, kegs, barrels, tools, and other production improvements.",
+      "Watch which product ran out first and make that the next production target.",
     ],
     guides: [
       { title: "How to Make Money Early Game", href: "/guides/how-to-make-money-early-game" },
-      { title: "Best Early Game Recipes", href: "/guides/best-early-game-recipes" },
+      { title: "Best Drinks to Keep on Tap", href: "/guides/best-drinks-to-keep-on-tap" },
     ],
     database: [
       { title: "Recipes", href: "/recipes" },
@@ -80,18 +227,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I do not know what to cook": {
-    actions: [
-      "Choose food by supply first: vegetables if farming is stable, fish if fishing is routine, baked food only if grain and oven flow are ready.",
-      "Use one flexible recipe slot for surplus and keep the rest of the menu predictable.",
-      "Test one new recipe at a time so you can see whether it creates shortages.",
-    ],
+    moduleIds: ["planting", "firstWeek"],
     avoid: [
-      "Do not build a menu from recipe names alone; check ingredient groups and station pressure.",
-      "Do not use brewing inputs in food unless drinks are already covered.",
+      "Do not buy too many recipes before your ingredients can support them.",
+      "Do not plan the menu around crops you are not planting or gathering.",
+      "Do not use brewing ingredients in food if drinks are already your bottleneck.",
     ],
     prepare: [
-      "Sort ingredients into vegetable, fish, meat, fruit, grain, and drink input groups.",
-      "Check which stations are actually free before opening.",
+      "Choose recipes from the ingredients you can repeat, not from the longest unlock list.",
+      "Plant around the active menu and drink plan.",
+      "Use one test recipe at a time so shortages are easy to diagnose.",
     ],
     guides: [
       { title: "Menu Planner", href: "/menu-planner" },
@@ -103,18 +248,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I run out of ingredients": {
-    actions: [
-      "Reduce the menu until every core item has a known restock source.",
-      "Protect ingredients shared by cooking and brewing before making optional products.",
-      "Use shortages as signals: the first ingredient to disappear should shape tomorrow's farming, fishing, or shopping plan.",
-    ],
+    moduleIds: ["firstWeek", "planting"],
     avoid: [
-      "Do not widen the menu to solve shortages; it usually makes storage harder to read.",
-      "Do not spend all flexible ingredients on experiments before service.",
+      "Do not open every day if the tavern needs a gathering or production day.",
+      "Do not plant unrelated crops while menu ingredients keep disappearing.",
+      "Do not ignore seasonal ingredients until they are unavailable.",
     ],
     prepare: [
-      "Create a reserve list for core menu inputs.",
-      "Mark surplus ingredients separately so they become optional recipes, not core dependencies.",
+      "Take gathering, farming, mining, or chopping days when stock is too thin.",
+      "Stockpile ingredients that support repeated recipes and brewing.",
+      "Simplify the menu until every core item has a clear source.",
     ],
     guides: [
       { title: "Best Ingredients to Stockpile", href: "/guides/best-ingredients-to-stockpile" },
@@ -126,22 +269,20 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "My tavern is too busy": {
-    actions: [
-      "Pause demand growth and simplify the menu until service feels readable again.",
-      "Fix the busiest work path first: cleaning, serving, stock checks, or production access.",
-      "Open only after core food and drinks are already prepared.",
-    ],
+    moduleIds: ["busy", "staff"],
     avoid: [
-      "Do not add more seating while cleaning or stock refills already interrupt service.",
-      "Do not solve a layout problem by adding more production complexity.",
+      "Do not add tables faster than food, drinks, cleaning, and movement can support.",
+      "Do not treat more customers as progress if you spend all day reacting.",
+      "Do not hire several staff members before profits and duties are clear.",
     ],
     prepare: [
-      "Move optional production decisions outside service time.",
-      "Keep emergency stock for the item that empties fastest.",
+      "Check food stock, drink stock, cleaning speed, table dirt, and service paths before expanding seats.",
+      "Use staff, coasters, cleaning upgrades, or slower expansion to reduce pressure.",
+      "Make one service improvement before increasing demand again.",
     ],
     guides: [
       { title: "Tavern Layout Tips", href: "/guides/tavern-layout-tips" },
-      { title: "Beginner Mistakes", href: "/guides/beginner-mistakes" },
+      { title: "Staff Hiring Order", href: "/guides/staff-hiring-order" },
     ],
     database: [
       { title: "Crafting Stations", href: "/crafting" },
@@ -149,18 +290,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I unlocked staff": {
-    actions: [
-      "Hire for the chore that repeatedly pulls you away from higher-value planning.",
-      "Stabilize stock before using staff to increase service pressure.",
-      "Review whether staff support cleaning, serving, rooms, or production prep most in your tavern.",
-    ],
+    moduleIds: ["staff", "busy"],
     avoid: [
-      "Do not hire staff just because the system unlocked; hire to remove a repeated bottleneck.",
+      "Do not hire staff just because the system unlocked.",
+      "Do not ignore wages, traits, and unnecessary duties.",
       "Do not expand capacity on the same day you are learning staff coverage.",
     ],
     prepare: [
-      "Write down the task you most often abandon during service.",
-      "Make sure staff are supporting a menu you can actually supply.",
+      "Name the biggest pain point before hiring.",
+      "Start with low-cost support if the tavern is still small.",
+      "Add more staff only after the tavern size and income support the wages.",
     ],
     guides: [
       { title: "Staff Hiring Order", href: "/guides/staff-hiring-order" },
@@ -172,18 +311,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I unlocked fishing": {
-    actions: [
-      "Use fishing to support food stock when crops are not enough, not as random storage filler.",
-      "Add fish recipes only after catches are consistent enough for repeat service.",
-      "Stop fishing early enough to prepare the tavern before opening.",
-    ],
+    moduleIds: ["fishing", "firstWeek"],
     avoid: [
-      "Do not build the whole menu around catches you cannot repeat.",
-      "Do not fish through the prep window if the tavern still lacks food, drinks, or cleaning.",
+      "Do not fish through your entire prep window if the tavern still needs stock or cleaning.",
+      "Do not make fish the whole menu unless catches are dependable.",
+      "Do not leave catches as storage clutter when they could solve a food shortage.",
     ],
     prepare: [
-      "Decide which fish-based recipe will receive the catch before you leave.",
-      "Keep a non-fish backup food when catches are weak.",
+      "Choose which fish recipe the catch supports before leaving.",
+      "Keep a non-fish backup food for weak fishing days.",
+      "Use fishing days when food supply needs support, not when drinks or cleaning are the real bottleneck.",
     ],
     guides: [
       { title: "Fishing Basics", href: "/guides/fishing-basics" },
@@ -195,18 +332,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I unlocked brewing": {
-    actions: [
-      "Start with one baseline drink and protect its ingredients from unrelated cooking.",
-      "Brew before service pressure starts so drinks are ready when customers arrive.",
-      "Expand drink variety only after the baseline drink survives several normal days.",
-    ],
+    moduleIds: ["brewing", "money"],
     avoid: [
-      "Do not start several drink chains at once if grain, fruit, hops, or yeast are thin.",
-      "Do not judge drinks only by expected value; ingredient reliability and timing matter.",
+      "Do not start too many drink chains with thin ingredient reserves.",
+      "Do not consume drink inputs in food before checking the bar plan.",
+      "Do not age every batch if normal service still needs ready drinks.",
     ],
     prepare: [
-      "Reserve brewing inputs before cooking.",
-      "Check keg and storage flow so finished drinks reach service.",
+      "Protect brewing inputs before cooking experiments.",
+      "Make one baseline drink reliable before adding more categories.",
+      "Add kegs, barrels, or stations when drink flow is the bottleneck.",
     ],
     guides: [
       { title: "Best Drinks to Keep on Tap", href: "/guides/best-drinks-to-keep-on-tap" },
@@ -218,18 +353,16 @@ const problemAdvice: Record<Problem, DecisionResult> = {
     ],
   },
   "I want more reputation": {
-    actions: [
-      "Improve the average service day: reliable stock, clean room, clear paths, and fewer customer delays.",
-      "Add comfort or capacity only when the supply chain can support the extra attention.",
-      "Use staff, layout, and menu simplification to reduce repeated service failures.",
-    ],
+    moduleIds: ["reputation", "busy"],
     avoid: [
-      "Do not treat reputation as separate from stock and service quality.",
-      "Do not expand customer demand while the current tavern already feels frantic.",
+      "Do not assume opening longer is the only reputation answer.",
+      "Do not add more tables if quality, comfort, and cleanliness are already weak.",
+      "Do not widen the menu before the core food and drinks are reliable.",
     ],
     prepare: [
-      "Open with food and drinks ready instead of producing reactively during service.",
-      "Review the room after busy days and fix the path that slowed you most.",
+      "Improve comfort, lighting, cleanliness, food quality, drink quality, and menu variety.",
+      "Prepare VIP needs when that system matters to your current stage.",
+      "Use staff and room improvements to make each service day smoother.",
     ],
     guides: [
       { title: "How to Increase Reputation", href: "/guides/how-to-increase-reputation" },
@@ -242,15 +375,34 @@ const problemAdvice: Record<Problem, DecisionResult> = {
   },
 };
 
-const systemAdvice: Record<System, string> = {
-  Farming: "Let farming serve the current menu instead of planting for every possible future recipe.",
-  Cooking: "Keep station pressure visible: a recipe is only reliable when ingredients and station time are both available.",
-  Brewing: "Protect grain, hops, yeast, fruit, honey, and other drink inputs before using them in optional food.",
-  Fishing: "Use fishing as menu support when it solves a food shortage and still leaves time to prep the tavern.",
-  Mining: "Mine with a station or upgrade target so the trip creates progress instead of storage clutter.",
-  Staff: "Assign staff to the chore that most often breaks your attention during service.",
-  "Guest Rooms": "Prepare food, drinks, cleaning, and staff coverage before treating guest rooms as extra demand.",
+const stageModuleIds: Partial<Record<Stage, Array<keyof typeof actionModules>>> = {
+  "Day 1": ["firstWeek"],
+  "First Week": ["firstWeek"],
+  "Mid Game": ["planting"],
+  "Late Game": ["reputation"],
 };
+
+const systemModuleIds: Partial<Record<System, keyof typeof actionModules>> = {
+  Farming: "planting",
+  Brewing: "brewing",
+  Fishing: "fishing",
+  Staff: "staff",
+  "Guest Rooms": "guestRooms",
+};
+
+const systemNotes: Record<System, string> = {
+  Farming: "Use farming to support the active menu, drink plan, and seasonal reserves.",
+  Cooking: "Keep cooking simple until repeatable ingredients and station flow are stable.",
+  Brewing: "Protect drink inputs and make one baseline drink reliable before expanding categories.",
+  Fishing: "Use fishing as planned food support rather than random storage filler.",
+  Mining: "Mine with a station, tool, keg, barrel, or upgrade target in mind.",
+  Staff: "Use staff to solve a named pain point, then watch whether wages fit the tavern size.",
+  "Guest Rooms": "Treat guest rooms as an expansion workload that belongs after service is stable.",
+};
+
+function uniqueModules(moduleIds: Array<keyof typeof actionModules>) {
+  return Array.from(new Set(moduleIds)).map((id) => actionModules[id]);
+}
 
 function unique(items: string[]) {
   return Array.from(new Set(items));
@@ -263,12 +415,18 @@ export function WhatToDoNextClient() {
 
   const result = useMemo(() => {
     const base = problemAdvice[problem];
-    const systemNotes = available.map((item) => systemAdvice[item]);
+    const moduleIds: Array<keyof typeof actionModules> = [
+      ...(stageModuleIds[stage] ?? []),
+      ...base.moduleIds,
+      ...available.map((item) => systemModuleIds[item]).filter((item): item is keyof typeof actionModules => Boolean(item)),
+      "mistakes",
+      "todayRule",
+    ];
 
     return {
-      actions: unique([...stageAdvice[stage], ...base.actions, ...systemNotes]).slice(0, 8),
+      modules: uniqueModules(moduleIds),
       avoid: base.avoid,
-      prepare: unique([...base.prepare, "After service, note what ran out first and what interrupted you most often."]),
+      prepare: unique([...base.prepare, ...available.map((item) => systemNotes[item])]).slice(0, 7),
       guides: base.guides,
       database: base.database,
     };
@@ -326,7 +484,26 @@ export function WhatToDoNextClient() {
       </section>
 
       <section className="space-y-5" aria-live="polite">
-        <RecommendationPanel title="Recommended Next Actions" items={result.actions} priority="High priority" />
+        <section className="rounded-lg border border-amber-200/18 bg-[#1a100b] p-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="rounded bg-amber-300 px-2 py-1 text-xs font-black uppercase tracking-[0.12em] text-stone-950">
+              Player-sourced
+            </span>
+            <h2 className="text-2xl font-bold text-amber-50">Player-Sourced Recommended Next Actions</h2>
+          </div>
+          <p className="mt-3 text-stone-300">
+            These recommendations summarize common player advice patterns. They are not one fixed build order; use the module that matches the bottleneck you actually have.
+          </p>
+          <div className="mt-5 grid gap-4">
+            {result.modules.map((module) => (
+              <ActionModuleCard key={module.id} module={module} />
+            ))}
+          </div>
+          <p className="mt-5 rounded border border-amber-200/15 bg-[#120c08]/70 p-4 font-bold text-amber-100">
+            The best next action is usually the one that fixes your current bottleneck, not the one that unlocks the most new things.
+          </p>
+        </section>
+
         <div className="grid gap-5 xl:grid-cols-2">
           <RecommendationPanel title="What to Avoid" items={result.avoid} priority="Mistake warning" tone="warning" />
           <RecommendationPanel title="What to Prepare" items={result.prepare} priority="Prep checklist" />
@@ -338,6 +515,37 @@ export function WhatToDoNextClient() {
         </div>
       </section>
     </div>
+  );
+}
+
+function ActionModuleCard({ module }: { module: ActionModule }) {
+  return (
+    <article className="rounded-lg border border-amber-200/15 bg-[#120c08]/70 p-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="rounded border border-amber-200/25 bg-amber-200/10 px-2 py-1 text-xs font-black uppercase tracking-[0.12em] text-amber-100">
+          {module.label}
+        </span>
+        <h3 className="text-xl font-bold text-amber-50">{module.title}</h3>
+      </div>
+      <p className="mt-3 text-sm text-stone-300">{module.summary}</p>
+      <ul className="mt-4 grid gap-2 text-sm text-stone-300 md:grid-cols-2">
+        {module.items.map((item) => (
+          <li key={item} className="rounded border border-amber-200/10 bg-[#1a100b] px-3 py-2">
+            {item}
+          </li>
+        ))}
+      </ul>
+      {module.steps ? (
+        <ol className="mt-4 grid gap-2 text-sm text-stone-300 md:grid-cols-2">
+          {module.steps.map((step, index) => (
+            <li key={step} className="rounded border border-amber-200/10 bg-[#24160f] px-3 py-2">
+              <span className="font-bold text-amber-100">{index + 1}. </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      ) : null}
+    </article>
   );
 }
 

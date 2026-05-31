@@ -1,5 +1,13 @@
 # Travellers Rest Guide Database
 
+Before making changes, read:
+
+- `PROJECT_DIRECTION.md`
+- `CONTENT_RULES.md`
+- `CODEX_TASK_LOG.md`
+
+All future work must follow the Travellers Rest Tavern Planner & Strategy Guide direction.
+
 A lightweight Next.js App Router website for a Travellers Rest wiki-style guide database. The first phase focuses on SEO, static generation, clean URLs, and data files that are easy to expand or generate with AI.
 
 ## Stack
