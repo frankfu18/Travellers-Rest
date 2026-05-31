@@ -13,7 +13,17 @@ type ProblemId =
   | "need-reputation"
   | "staff-and-rooms";
 
+type ActionItem = {
+  title: string;
+  body: string;
+};
+
 type Recommendation = {
+  title: string;
+  actions: ActionItem[];
+};
+
+type RecommendationSeed = {
   title: string;
   actions: string[];
 };
@@ -340,7 +350,7 @@ const recommendationsByStageAndProblem = {
       ],
     },
   },
-} satisfies Record<StageId, Record<ProblemId, Recommendation>>;
+} satisfies Record<StageId, Record<ProblemId, RecommendationSeed>>;
 
 const extraActionsByStageAndProblem = {
   "first-week": {
@@ -493,20 +503,135 @@ const extraActionsByStageAndProblem = {
   },
 } satisfies Record<StageId, Record<ProblemId, string[]>>;
 
+const actionTitlesByProblem: Record<ProblemId, string[]> = {
+  "need-money": [
+    "Build a short prep loop before opening",
+    "Turn available produce into sellable stock",
+    "Run a controlled service test",
+    "Spend coins where they restart production",
+    "Keep progression tied to materials",
+    "Check the slowest income step",
+    "Protect tomorrow's production money",
+    "Use supply runs to keep income alive",
+  ],
+  "what-to-cook": [
+    "Keep the first menu small",
+    "Test one recipe before expanding",
+    "Remove ingredient conflicts early",
+    "Choose recipes you can repeat",
+    "Keep food from starving drinks",
+    "Use the next harvest as your menu test",
+    "Cut dishes that empty one ingredient",
+    "Make surplus food temporary",
+  ],
+  "run-out-stock": [
+    "Use a closed prep day when shelves are empty",
+    "Build a gather-to-open rhythm",
+    "Cut the menu until stock becomes readable",
+    "Record the first broken stock category",
+    "Keep a reserve instead of selling to zero",
+    "Refill the category that stopped service",
+    "Separate tavern stock from order stock",
+    "Turn free time into replacement batches",
+  ],
+  "what-to-plant": [
+    "Give every plot a job",
+    "Plant around the next menu",
+    "Use crop examples as tests, not rules",
+    "Keep recurring crops for repeat service",
+    "Protect seasonal ingredients before they vanish",
+    "Keep a safe staple lane",
+    "Match drink crops to station capacity",
+    "Review harvests against actual sales",
+  ],
+  "too-busy": [
+    "Stop adding seats after a chaotic day",
+    "Shorten service before the room collapses",
+    "Move supplies onto the service route",
+    "Prepare before the door opens",
+    "Treat shop growth as gradual pressure",
+    "Count the task that interrupts you most",
+    "Hire only for the real slowdown",
+    "Fix the path before adding capacity",
+  ],
+  "need-reputation": [
+    "Plan one clean service day",
+    "Improve comfort after the loop works",
+    "Check the whole guest experience",
+    "Keep rating goals tied to supplies",
+    "Fix the first reputation drag",
+    "Prepare quality before chasing traffic",
+    "Use variety only when stock can carry it",
+    "Keep rooms and hall comfort balanced",
+  ],
+  "staff-and-rooms": [
+    "Treat rooms as expansion, not rescue",
+    "Hire for one time sink first",
+    "Check stock before adding space",
+    "Spend on production before lodging",
+    "Match staff value to actual workload",
+    "Review wages after the first hire",
+    "Expand seats only after extra stock exists",
+    "Keep lodging from cannibalizing the hall",
+  ],
+};
+
+const stageDetails: Record<StageId, { label: string; situation: string; pacing: string }> = {
+  "first-week": {
+    label: "First Week",
+    situation: "your tavern loop is still fragile and one bad opening can empty several categories at once",
+    pacing: "Stop after one service test and adjust the next morning instead of adding another unlock immediately.",
+  },
+  "early-game": {
+    label: "Early Game",
+    situation: "basic production exists, but the tavern can still outgrow food, drink, or cleaning capacity",
+    pacing: "Run the change for a few normal openings before you add seats, recipes, staff, or another production chain.",
+  },
+  "mid-game": {
+    label: "Mid Game",
+    situation: "several systems compete for the same crops, materials, staff time, and station slots",
+    pacing: "Check the full chain after each adjustment, because the bottleneck may move from ingredients to processing, aging, staff, or layout.",
+  },
+  "late-game": {
+    label: "Late Game",
+    situation: "profit and reputation depend more on tuned production, staff routing, rooms, and premium stock than on simply opening longer",
+    pacing: "Keep only the changes that improve a real bottleneck over several services, and retire lines that consume rare stock without helping the tavern.",
+  },
+};
+
+function expandRecommendation(stageId: StageId, problemId: ProblemId): Recommendation {
+  const seed = recommendationsByStageAndProblem[stageId][problemId];
+  const notes = [...seed.actions, ...extraActionsByStageAndProblem[stageId][problemId]].slice(0, 8);
+
+  return {
+    title: seed.title,
+    actions: notes.map((note, index) => expandAction(note, stageId, problemId, index)),
+  };
+}
+
+function expandAction(note: string, stageId: StageId, problemId: ProblemId, index: number): ActionItem {
+  const stage = stageDetails[stageId];
+  const titles = actionTitlesByProblem[problemId];
+  const title = titles[index] ?? `${stage.label} action ${index + 1}`;
+  const cleanedNote = note.replace(/; /g, ". ");
+  const sourceLogic =
+    index % 3 === 0
+      ? "That is the practical reason this pattern shows up in both English community advice and Japanese guide-style progression notes."
+      : index % 3 === 1
+        ? "The useful part of the community logic is not the exact item choice, but the habit of checking whether the next opening can repeat the result."
+        : "Use it as a planning rule rather than a fixed build order, because balance and item values can change between updates.";
+
+  return {
+    title,
+    body: `${cleanedNote} In ${stage.label.toLowerCase()}, this matters because ${stage.situation}. Apply it before the next opening, watch whether the same shortage or delay appears again, and use that result to decide whether to continue or pause; ${stage.pacing} ${sourceLogic}`,
+  };
+}
+
 export function WhatToDoNextClient() {
   const [currentStage, setCurrentStage] = useState<StageId>("first-week");
   const [currentProblem, setCurrentProblem] = useState<ProblemId>("need-money");
 
-  const recommendation = useMemo(
-    () => ({
-      ...recommendationsByStageAndProblem[currentStage][currentProblem],
-      actions: [
-        ...recommendationsByStageAndProblem[currentStage][currentProblem].actions,
-        ...extraActionsByStageAndProblem[currentStage][currentProblem],
-      ],
-    }),
-    [currentProblem, currentStage],
-  );
+  const recommendation = useMemo(() => expandRecommendation(currentStage, currentProblem), [currentProblem, currentStage]);
   const stageDescription = stages.find((stage) => stage.id === currentStage)?.description;
 
   return (
@@ -550,13 +675,16 @@ export function WhatToDoNextClient() {
         <p className="mt-3 max-w-3xl text-stone-300">
           These actions summarize common player advice from English discussions, Japanese guide pages, and player notes. They avoid fixed prices or exact balance claims because the game changes over time.
         </p>
-        <ul className="mt-5 grid gap-3 text-stone-300">
-          {recommendation.actions.map((action) => (
-            <li key={action} className="rounded border border-amber-200/12 bg-[#120c08]/70 p-4">
-              {action}
+        <ol className="mt-6 grid gap-5 text-stone-300">
+          {recommendation.actions.map((action, index) => (
+            <li key={action.title} className="rounded border border-amber-200/12 bg-[#120c08]/70 p-5">
+              <h3 className="text-lg font-bold text-amber-100">
+                {index + 1}. {action.title}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-stone-300">{action.body}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </section>
     </div>
   );

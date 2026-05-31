@@ -1,5 +1,38 @@
 # Codex Task Log
 
+## 2026-05-31 - Long-Form Action Paragraphs
+
+### Goal
+
+Deepen `/what-to-do-next` Recommended Actions so each item reads like a short strategy paragraph with a clear title, scenario, action, reason, adjustment point, and community-informed planning logic.
+
+### Files changed
+
+- `components/what-to-do-next-client.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated the existing `/what-to-do-next` page.
+
+### SEO changes
+
+None. Metadata and sitemap behavior were not changed.
+
+### Data changes
+
+- Converted rendered action items to `title + body` cards.
+- Kept all 28 stage/problem combinations.
+- Each combination now renders 8 card-like action paragraphs built from local static strategy notes.
+
+### Verification needed
+
+- Future content edits should keep action bodies practical and avoid exact unverified prices, levels, timers, multipliers, or formulas.
+
+### Next recommended task
+
+Move the what-to-do-next recommendation data into a dedicated local data file and add a validation script for action counts, unique titles, and minimum body length.
+
 ## 2026-05-31 - Recommended Actions Copy Polish
 
 ### Goal
