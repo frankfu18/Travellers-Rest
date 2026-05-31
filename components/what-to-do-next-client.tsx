@@ -342,12 +342,169 @@ const recommendationsByStageAndProblem = {
   },
 } satisfies Record<StageId, Record<ProblemId, Recommendation>>;
 
+const extraActionsByStageAndProblem = {
+  "first-week": {
+    "need-money": [
+      "Before opening, count prepared meals and drinks separately. If one side is low, spend the morning fixing that side instead of trying to earn through a half-stocked service.",
+      "Keep one small stack of fruit for drinks and one stack of basic food ingredients for meals. Selling the raw materials too early makes tomorrow's opening harder to prepare.",
+      "If you end the day with coins but no fuel, wood, or ingredients, treat the next morning as a supply run. Early profit only matters if it turns into the next batch of sellable stock.",
+    ],
+    "what-to-cook": [
+      "Keep your first food menu to one or two dishes that use ingredients you can replace tomorrow. If one dish empties your only onion stack, remove it until onions are easy to refill.",
+      "Before buying another recipe, cook a small batch of the dish you already chose and run one service. The empty ingredient slot after that service tells you what the menu can really support.",
+      "Pick food that leaves room for drinks. If the same fruit, grain, or dairy item is needed for your bar plan, do not spend the whole stack on a test dish.",
+    ],
+    "run-out-stock": [
+      "Use one closed day as a prep day when storage is empty. Gather fruit, cut wood, mine fuel materials, cook a small batch, then reopen with enough stock to learn the next bottleneck.",
+      "Write down the first shelf that empties during service. If drinks vanish first, prepare drinks tomorrow; if meals vanish first, cook before opening; if fuel blocks production, gather materials.",
+      "Do not refill every category equally. Refill the item that stopped service first, then add a small buffer for the second item that dropped low.",
+    ],
+    "what-to-plant": [
+      "Assign every early plot a job before planting: daily meals, drink ingredients, or reserve stock. A full field is not useful if none of it feeds the next menu.",
+      "Plant a small test patch for new crops instead of converting the whole field. After one harvest, decide whether the crop actually supports your recipes or drink chain.",
+      "Keep at least one familiar crop line active while testing seasonal crops. That gives the kitchen something predictable even if the new crop is awkward to use.",
+    ],
+    "too-busy": [
+      "If tables stay dirty after each rush, stop adding seats and rearrange the room so cleaning paths are shorter. More customers only make the same dirty-table problem louder.",
+      "Open after food and drinks are already stocked, then close before both shelves hit zero. A controlled short service teaches more than a frantic full day.",
+      "Put storage and service points where you naturally pass them. If you cross the room for every refill, the layout is stealing time before the tavern is truly busy.",
+    ],
+    "need-reputation": [
+      "Start with one clean, stocked service day. Reputation work is easier when customers are not waiting while you cook, brew, or clean from behind.",
+      "Add comfort only after the room still functions. A decorated room with blocked paths and empty drinks will not feel better to run.",
+      "If reputation feels slow, check the basic service chain first: meals ready, drinks ready, tables clean, room lit, and no extra seats you cannot handle.",
+    ],
+    "staff-and-rooms": [
+      "Do not build guest rooms just because the option appears. Rooms add furniture cost, cleaning pressure, and supply demand before the main tavern has proven it can stay stocked.",
+      "If you test one staff hire, choose the job that keeps you from leaving the tavern. If drinks pull you away from farming every day, solve that before hiring for a quiet task.",
+      "Delay expansion after any service day that ended with empty shelves. Extra space should follow a solved supply problem, not create a larger version of it.",
+    ],
+  },
+  "early-game": {
+    "need-money": [
+      "Check the slowest part of the drink loop before adding another product: fruit supply, brewing input, keg space, or aging capacity. Add the missing piece rather than starting a second weak chain.",
+      "Run the same money item for several openings and watch whether it fails from ingredients, station time, or service space. The fix is different for each failure.",
+      "Set aside money for the next batch of seeds, fuel, or brewing inputs before buying comfort pieces. Early profit disappears quickly if the next production cycle cannot start.",
+    ],
+    "what-to-cook": [
+      "Build the day around one repeatable food item and one backup dish. Once those survive a normal service, add variety; adding variety before that hides which ingredient is missing.",
+      "If your menu looks full but storage empties after one service, cut the menu down to dishes supported by crops you can replace within a few days.",
+      "Use surplus ingredients for a rotating special instead of turning them into permanent menu items. A surplus dish should solve storage overflow, not become tomorrow's shortage.",
+    ],
+    "run-out-stock": [
+      "At the start of each in-game week, choose one prep block for crops, one for drinks, and one for materials. Skipping prep is usually why early stock collapses during service.",
+      "If drinks run out before food, spend the next morning on fruit pressing, brewing, keg preparation, or ingredient reserves before you open again.",
+      "Keep order-board deliveries away from your opening stock. If an order consumes the same ingredients as tonight's menu, finish the tavern batch first or delay the order.",
+    ],
+    "what-to-plant": [
+      "Reserve part of the field for boring staples even when new crops unlock. Staples keep the kitchen alive while specialty crops prove whether they are worth more space.",
+      "Match drink crops to the drink chain you can actually process. Grapes or hops do not help if the station, fuel, or storage step is the real blocker.",
+      "Use a small seasonal crop block for higher-use crops, then compare the harvest with actual sales. Keep it only if it turns into menu or drink stock quickly.",
+    ],
+    "too-busy": [
+      "Before adding a table, run one service and count the interruptions: cleaning, drinks, meals, or pathing. Upgrade the task that interrupts most often.",
+      "Consider a bartender when drink orders keep interrupting cooking, farming, or brewing. If drinks are not the slow part yet, keep the coins and solve the real bottleneck first.",
+      "Move refills closer to the service route before hiring extra help. A better path can remove pressure that looks like a staffing problem.",
+    ],
+    "need-reputation": [
+      "Prepare one reputation-focused service day with enough meals, enough drinks, clean tables, lighting, and no new seats. Quality falls apart when you add traffic on the same day.",
+      "Add menu variety from ingredients you already produce. A new dish that empties rare stock can hurt the next service more than it helps reputation.",
+      "Use decoration to improve a working room, not to cover a broken one. Fix empty drinks, dirty tables, and long walking paths first.",
+    ],
+    "staff-and-rooms": [
+      "Hire one worker only after you know which task is costing you the most time. A bartender makes sense when drinks slow service, but several early wages can turn a good day into a low-profit day.",
+      "Treat guest rooms as an expansion project, not an emergency income fix. If the dining room still runs out of meals or drinks, rooms add workload before the base business is ready.",
+      "When expanding seats, prepare an extra batch of both food and drinks first. If the added seats empty stock immediately, remove or delay the expansion.",
+    ],
+  },
+  "mid-game": {
+    "need-money": [
+      "At mid game, stop judging profit by customer count alone. Check which station sits idle, which ingredient blocks brewing, and which aged batch is waiting too long before expanding again.",
+      "Use staff coverage to create production time. If staff free you from service but you do not brew, cook, plant, or process during that time, wages are not improving the loop.",
+      "Audit one drink chain from crop to keg to aging. Fix the slowest step before spending on a different chain that will hit the same bottleneck.",
+    ],
+    "what-to-cook": [
+      "Split the menu into daily service food and high-value batch food. Daily food should be easy to refill; batch food can use rarer ingredients when the reserve is ready.",
+      "If a recipe slows several stations, move it out of the everyday menu and make it only when ingredients and station time are already free.",
+      "Use advanced dishes as planned batches, not random service filler. Prepare them before the day starts so they do not steal attention from basic refills.",
+    ],
+    "run-out-stock": [
+      "Set a minimum number for each stock role, even if the number is only your own rough rule. Do not start a service if food, drinks, fuel, or room supplies are below that line.",
+      "When staff reduce service work, spend the recovered time on the stock category that failed last week. More free time should become more batches, not just more open hours.",
+      "Check whether rooms, board orders, and the main hall are all eating the same crop or processed ingredient. If they are, assign one use as priority before production begins.",
+    ],
+    "what-to-plant": [
+      "Give each field section a fixed purpose for the next few harvests: staples, brewing, premium food, or reserve. Replanning every day makes storage harder to read.",
+      "Do not replace all dependable crops with high-value seasonal crops. Keep enough basics planted so the tavern can still open if the seasonal plan disappoints.",
+      "Use long-horizon crops only after short-term supply is covered. A slow investment does not help if tonight's kitchen is missing vegetables or drink inputs.",
+    ],
+    "too-busy": [
+      "Walk the service route in your head before moving furniture: bar, tables, cleaning spots, storage, and rooms. If one route crosses everything, redesign before buying more seats.",
+      "Use a bouncer when disruptive guests repeatedly pull attention away from service. If the problem is drinks or cleaning instead, choose staff or layout changes for that pressure.",
+      "Separate room chores from hall chores as much as possible. Mid-game pressure often comes from two workflows sharing the same narrow path.",
+    ],
+    "need-reputation": [
+      "Build one polished service cycle: premium stock ready, clean room, comfort pieces placed, staff assigned, and no experimental menu change during the same opening.",
+      "Use VIP or high-quality days only when the pantry can absorb them. A reputation push should not leave tomorrow's normal service without ingredients.",
+      "If reputation stalls, inspect the whole guest experience rather than adding seats: lighting, dirt, menu variety, drink quality, waiting time, and room comfort if rooms are active.",
+    ],
+    "staff-and-rooms": [
+      "Before adding rooms, run a normal tavern day and note whether food, drinks, and cleaning still hold. If the hall struggles, rooms will multiply the same workload.",
+      "Give each staff member a clear reason to exist. If two workers cover quiet jobs while drinks collapse, change tasks before hiring another person.",
+      "Budget room furniture and comfort alongside meal and drink reserves. A furnished room that drains the main tavern can slow both income lines.",
+    ],
+  },
+  "late-game": {
+    "need-money": [
+      "Late-game money comes from tightening the whole chain: premium inputs, batch timing, aging space, staff routes, and room demand. Pick one chain and remove its slowest step.",
+      "Do not open longer just to chase more sales if staff and stock are already stretched. Improve batch size or service flow so the same hours sell better products.",
+      "Review products that consume rare ingredients but sell slowly. Retire weak lines and move those ingredients into batches that reliably leave the counter.",
+    ],
+    "what-to-cook": [
+      "Use late-game storage history to trim the menu. If a dish sits unsold or steals ingredients from better batches, remove it from regular service.",
+      "Pair premium dishes with dependable base dishes so a failed premium batch does not leave the tavern without meals.",
+      "Plan food and drinks together before rooms or events draw from the same pantry. Late-game menus fail when every system assumes the same reserve is available.",
+    ],
+    "run-out-stock": [
+      "If late-game storage still empties, trace one missing item backward through field space, processing, aging, staff movement, and layout. The first blocked step is the real fix.",
+      "Create batch days for major categories instead of topping up after every opening. Large taverns need scheduled production more than emergency crafting.",
+      "Keep safety stock for ingredients used by rooms, board orders, and premium menu items. If three systems share one crop, that crop needs a protected reserve.",
+    ],
+    "what-to-plant": [
+      "Divide the farm into permanent lanes: base cooking, drink production, premium seasonal crops, and long-term investments. Do not let one trend consume every plot.",
+      "Protect staple crops even when premium crops look stronger. A late-game tavern still loses momentum if basic dishes, drinks, or room supplies run dry.",
+      "Use saplings, tea-style crops, or other long-term plants as planned capacity, not emergency stock. Plant them when the current menu is already covered.",
+    ],
+    "too-busy": [
+      "If late-game service feels chaotic, remove bad seats before adding help. A table that creates long walking routes can cost more attention than it earns.",
+      "Tune staff by pressure: bartender for drink interruptions, bouncer for troublesome guests, housekeeper for room workload. Hiring without matching pressure just adds wages.",
+      "Separate room traffic from hall service wherever the layout allows it. Shared paths make cleaning and refills feel worse as the tavern grows.",
+    ],
+    "need-reputation": [
+      "Prepare reputation pushes like production projects: premium food ready, drinks aged or stocked, comfort placed, lighting checked, staff assigned, and no last-minute menu gamble.",
+      "Do not trade service quality for crowd size. A smaller controlled opening with high-quality stock is better than a packed room that runs dirty and empty.",
+      "Review comfort by area, not just total decoration. If rooms feel good but the hall path is crowded, or the hall looks good but rooms are neglected, reputation work becomes uneven.",
+    ],
+    "staff-and-rooms": [
+      "Late-game expansion should solve a named bottleneck. If you cannot say whether the new room, staff member, or layout change fixes cleaning, service, stock, or comfort, wait.",
+      "Reassign staff after every major layout or room change. A good old task setup can become wasteful once traffic, rooms, or drink demand shifts.",
+      "Scale rooms only with the supplies behind them: furniture, comfort, cleaning time, food, drinks, and staff coverage. Room income is strongest when it does not cannibalize the hall.",
+    ],
+  },
+} satisfies Record<StageId, Record<ProblemId, string[]>>;
+
 export function WhatToDoNextClient() {
   const [currentStage, setCurrentStage] = useState<StageId>("first-week");
   const [currentProblem, setCurrentProblem] = useState<ProblemId>("need-money");
 
   const recommendation = useMemo(
-    () => recommendationsByStageAndProblem[currentStage][currentProblem],
+    () => ({
+      ...recommendationsByStageAndProblem[currentStage][currentProblem],
+      actions: [
+        ...recommendationsByStageAndProblem[currentStage][currentProblem].actions,
+        ...extraActionsByStageAndProblem[currentStage][currentProblem],
+      ],
+    }),
     [currentProblem, currentStage],
   );
   const stageDescription = stages.find((stage) => stage.id === currentStage)?.description;

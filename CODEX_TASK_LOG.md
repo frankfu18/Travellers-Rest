@@ -1,5 +1,38 @@
 # Codex Task Log
 
+## 2026-05-31 - Recommended Actions Copy Polish
+
+### Goal
+
+Improve `/what-to-do-next` action copy so each recommendation reads more like practical strategy writing and less like AI-style community summary.
+
+### Files changed
+
+- `components/what-to-do-next-client.tsx`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated copy for the existing `/what-to-do-next` page.
+
+### SEO changes
+
+None. Metadata and sitemap behavior were not changed.
+
+### Data changes
+
+- Added three concrete, stage-specific and problem-specific actions to each of the 28 recommendation combinations.
+- Each combination now renders 8 recommended actions.
+- Reduced mechanical source phrases inside action copy while preserving the English and Japanese community-informed strategy direction.
+
+### Verification needed
+
+- Continue checking future advice against current Travellers Rest mechanics before adding exact values, prices, levels, timers, or formulas.
+
+### Next recommended task
+
+Add automated checks for `/what-to-do-next` recommendation data: 28 unique titles, at least 8 actions per combination, and no duplicate action strings.
+
 ## 2026-05-31 - English and Japanese Planner Simplification
 
 ### Goal
