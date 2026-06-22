@@ -72,8 +72,8 @@ export default function HomePage() {
       />
       <section className="relative overflow-hidden border-b border-amber-300/15">
         <Image
-          src="/images/tavern-hero.png"
-          alt="Cozy fantasy tavern interior for Travellers Rest tavern planning"
+          src="/images/tavern-hero-pixel.png"
+          alt="Pixel art tavern with an active bar, kitchen, brewing equipment, and dining guests"
           fill
           priority
           sizes="100vw"

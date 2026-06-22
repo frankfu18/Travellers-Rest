@@ -23,10 +23,10 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     images: [
       {
-        url: "/images/tavern-hero.png",
-        width: 1536,
-        height: 1024,
-        alt: "Cozy Travellers Rest tavern guide database",
+        url: "/images/tavern-hero-pixel.png",
+        width: 1717,
+        height: 916,
+        alt: "Pixel art tavern planning and strategy scene",
       },
     ],
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: ["/images/tavern-hero.png"],
+    images: ["/images/tavern-hero-pixel.png"],
   },
 };
 

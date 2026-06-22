@@ -1,5 +1,39 @@
 # Codex Task Log
 
+## 2026-06-22 - Pixel Art Homepage Hero
+
+### Goal
+
+Replace the homepage hero artwork with an original pixel-art tavern scene that feels closer to a tavern management game and supports the page's decision-tool positioning.
+
+### Files changed
+
+- `app/page.tsx`
+- `app/layout.tsx`
+- `public/images/tavern-hero-pixel.png`
+- `CODEX_TASK_LOG.md`
+
+### Pages added
+
+None. This task updated the existing homepage artwork.
+
+### SEO changes
+
+- Updated Open Graph and Twitter image references to the new pixel-art hero.
+- Corrected the Open Graph image dimensions and alt text for the new asset.
+
+### Data changes
+
+None.
+
+### Verification needed
+
+- Review social-card cropping after deployment on platforms that cache older Open Graph images.
+
+### Next recommended task
+
+Create a dedicated 1200 x 630 social image if tighter control over link-preview crops becomes important.
+
 ## 2026-05-31 - Decision-First Action Copy Cleanup
 
 ### Goal
